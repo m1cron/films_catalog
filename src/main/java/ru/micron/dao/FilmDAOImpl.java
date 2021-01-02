@@ -20,6 +20,14 @@ public class FilmDAOImpl implements FilmDAO {
         film1.setGenre("sci-fi");
         film1.setWatched(true);
         films.put(film1.getId(), film1);
+
+        Film film2 = new Film();
+        film2.setId(AUTO_ID.getAndIncrement());
+        film2.setTitle("TEST");
+        film2.setYear(1488);
+        film2.setGenre("test");
+        film2.setWatched(true);
+        films.put(film2.getId(), film2);
     }
 
     @Override
