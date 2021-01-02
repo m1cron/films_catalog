@@ -23,7 +23,7 @@ public class FilmDAOImpl implements FilmDAO {
     }
 
     @Override
-    public List<Film> allFilms(int id) {
+    public List<Film> allFilms() {
         return new ArrayList<>(films.values());
     }
 
