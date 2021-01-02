@@ -1,6 +1,7 @@
 package ru.micron.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,10 +24,12 @@ public class FilmController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView editPage() {
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView editPage(@PathVariable("id") int id) {
+        Film film = filmService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editPage");
+        modelAndView.addObject("film", film);
         return modelAndView;
     }
 }
