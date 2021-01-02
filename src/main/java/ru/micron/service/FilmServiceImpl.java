@@ -1,14 +1,17 @@
 package ru.micron.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.micron.dao.FilmDAO;
-import ru.micron.dao.FilmDAOImpl;
 import ru.micron.model.Film;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
 public class FilmServiceImpl implements FilmService {
-    private final FilmDAO filmDAO = new FilmDAOImpl();
+    @Autowired
+    private FilmDAO filmDAO;
 
     @Override
     @Transactional

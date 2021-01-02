@@ -3,17 +3,15 @@ package ru.micron.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ru.micron.model.Film;
 
 import java.util.List;
 
+@Repository
 public class FilmDAOImpl implements FilmDAO {
-    private SessionFactory sessionFactory;
-
     @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private SessionFactory sessionFactory;
 
     @Override
     @SuppressWarnings("unchecked")
