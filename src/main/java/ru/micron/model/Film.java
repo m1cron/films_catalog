@@ -46,4 +46,15 @@ public class Film {
     public void setWatched(boolean watched) {
         this.watched = watched;
     }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", year=" + year +
+                ", genre='" + genre + '\'' +
+                ", watched=" + watched +
+                '}';
+    }
 }

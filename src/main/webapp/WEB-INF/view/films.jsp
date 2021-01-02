@@ -5,8 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    Hello, world!
-    <br/><br/>
+<br/>
+    ${film}
+<br/>
     <h2><a href="/edit">edit page</a> </h2>
 </body>
 </html>
