@@ -34,7 +34,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     @Transactional
     public void edit(Film film) {
-        filmDAO.delete(film);
+        filmDAO.edit(film);
     }
 
     @Override
