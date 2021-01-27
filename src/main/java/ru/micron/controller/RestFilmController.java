@@ -15,13 +15,13 @@ public class RestFilmController {
     @Autowired
     private FilmService filmService;
 
-    @RequestMapping(value = "/films", method = RequestMethod.GET)
+    @GetMapping("/films")
     public List<Film> allFilms() {
         return filmService.allFilms();
     }
 
-    @RequestMapping(value = "/films/{id}", method = RequestMethod.GET)
-    public Film getFilmById(@PathVariable("id") int id) {
+    @GetMapping(value = "/films/{id}")
+    public Film getFilmById(@PathVariable int id) {
         Film film = filmService.getById(id);
         if (film == null) {
             throw new NoSuchFilmException(String.format("There is no film with ID = %d in Database", id));
@@ -29,20 +29,20 @@ public class RestFilmController {
         return film;
     }
 
-    @RequestMapping(value = "/films", method = RequestMethod.POST)
+    @PostMapping("/films")
     public Film addFilm(@RequestBody Film film) {
         filmService.add(film);
         return film;
     }
 
-    @RequestMapping(value = "/films", method = RequestMethod.PUT)
+    @PutMapping("/films")
     public Film editFilm(@RequestBody Film film) {
         filmService.edit(film);
         return film;
     }
 
-    @RequestMapping(value = "/films/{id}", method = RequestMethod.DELETE)
-    public String deleteFilm(@PathVariable("id") int id) {
+    @DeleteMapping("/films/{id}")
+    public String deleteFilm(@PathVariable int id) {
         Film film = filmService.getById(id);
         if (film == null) {
             throw new NoSuchFilmException(String.format("There is no film with ID = %d in Database", id));

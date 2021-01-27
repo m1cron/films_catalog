@@ -2,10 +2,7 @@ package ru.micron.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.micron.model.Film;
 import ru.micron.service.FilmService;
@@ -18,7 +15,7 @@ public class FilmController {
     @Autowired
     private FilmService filmService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public ModelAndView allFilms() {
         List<Film> films = filmService.allFilms();
         ModelAndView modelAndView = new ModelAndView();
@@ -27,8 +24,8 @@ public class FilmController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editFilm(@PathVariable("id") int id) {
+    @GetMapping("/edit/{id}")
+    public ModelAndView editFilm(@PathVariable int id) {
         Film film = filmService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editPage");
@@ -36,31 +33,31 @@ public class FilmController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView editPage(@ModelAttribute("film") Film film) {
+    @PostMapping("/edit")
+    public ModelAndView editPage(@ModelAttribute Film film) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         filmService.edit(film);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping("/add")
     public ModelAndView addPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editPage");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addFilm(@ModelAttribute("film") Film film) {
+    @PostMapping("/add")
+    public ModelAndView addFilm(@ModelAttribute Film film) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         filmService.add(film);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteFilm(@PathVariable("id") int id) {
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteFilm(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         Film film = filmService.getById(id);
