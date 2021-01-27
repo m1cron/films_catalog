@@ -1,12 +1,13 @@
-#Simple Film Catalog
+# Simple Film Catalog
 
-![Image alt](https://github.com/m1cron/films_catalog/tree/master/screens/1.png)
-![Image alt](https://github.com/m1cron/films_catalog/tree/master/screens/2.png)
-![Image alt](https://github.com/m1cron/films_catalog/tree/master/screens/3.png)
+![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/1.png)
+![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/2.png)
+![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/3.png)
 
-###Stack:
+### Stack:
 ```
-Java 15
+Java 11
+Spring REST API
 Spring MVC 5
 Hibernate 5
 H2 Database
