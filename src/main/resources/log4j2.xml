@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+        <property name="filePattern">${date:yyyy-MM-dd}</property>
+        <Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="APP_LOG_ROOT">./logs</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="app"
+                     fileName="${sys:APP_LOG_ROOT}/app-${filePattern}.log"
+                     filePattern="${sys:APP_LOG_ROOT}/app-${filePattern}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="spring" fileName="${sys:APP_LOG_ROOT}/spring-${filePattern}.log"
+                     filePattern="${sys:APP_LOG_ROOT}/spring-${filePattern}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="hibernate" fileName="${sys:APP_LOG_ROOT}/hibernate-${filePattern}.log"
+                     filePattern="${sys:APP_LOG_ROOT}/hibernate-${filePattern}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="ru.micron" additivity="false" level="info">
+            <AppenderRef ref="app"/>
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <Logger name="org.springframework" additivity="false" level="warn">
+            <AppenderRef ref="spring"/>
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <Logger name="org.hibernate" additivity="false" level="info">
+            <AppenderRef ref="hibernate"/>
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="console"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>

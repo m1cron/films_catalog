@@ -8,7 +8,7 @@
 ```
 Java 11
 Spring REST API
-Spring Boot 5
+Spring Boot 2
 Spring MVC 5
 Hibernate 5
 H2 Database
