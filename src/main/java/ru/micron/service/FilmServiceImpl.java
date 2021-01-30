@@ -2,7 +2,7 @@ package ru.micron.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.micron.dao.FilmRepository;
+import ru.micron.repository.FilmRepository;
 import ru.micron.model.Film;
 
 import java.util.List;
