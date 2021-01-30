@@ -1,6 +1,7 @@
 package ru.micron.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.micron.exception_handling.NoSuchFilmException;
 import ru.micron.model.Film;
@@ -21,6 +22,7 @@ public class RestFilmController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('films:read')")
     public Film getFilmById(@PathVariable int id) {
         Film film = filmService.getById(id);
         if (film == null) {
@@ -30,18 +32,21 @@ public class RestFilmController {
     }
 
     @PostMapping()
+    @PreAuthorize("hasAuthority('films:write')")
     public Film addFilm(@RequestBody Film film) {
         filmService.add(film);
         return film;
     }
 
     @PutMapping()
+    @PreAuthorize("hasAuthority('films:write')")
     public Film editFilm(@RequestBody Film film) {
         filmService.edit(film);
         return film;
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('films:write')")
     public String deleteFilm(@PathVariable int id) {
         Film film = filmService.getById(id);
         if (film == null) {
