@@ -7,11 +7,15 @@ import ru.micron.model.Film;
 
 import java.util.List;
 
-@Service
+@Service("filmServiceImpl")
 public class FilmServiceImpl implements FilmService {
 
+    private final FilmRepository filmRepository;
+
     @Autowired
-    private FilmRepository filmRepository;
+    public FilmServiceImpl(FilmRepository filmRepository) {
+        this.filmRepository = filmRepository;
+    }
 
     @Override
     public List<Film> allFilms() {
