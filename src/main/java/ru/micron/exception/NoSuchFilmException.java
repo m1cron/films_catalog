@@ -1,4 +1,4 @@
-package ru.micron.exception_handling;
+package ru.micron.exception;
 
 public class NoSuchFilmException extends RuntimeException {
 

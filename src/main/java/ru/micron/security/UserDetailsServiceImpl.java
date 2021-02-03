@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.micron.model.User;
+import ru.micron.model.user.User;
 import ru.micron.repository.UserRepository;
 
 @Service("userDetailsServiceImpl")

@@ -1,9 +1,10 @@
-package ru.micron.service;
+package ru.micron.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.micron.repository.FilmRepository;
 import ru.micron.model.Film;
+import ru.micron.service.FilmService;
 
 import java.util.List;
 
@@ -18,27 +19,23 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<Film> allFilms() {
+    public Film getFilm(int id) {
+        return filmRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Film> getAllFilms() {
         return filmRepository.findAll();
     }
 
     @Override
-    public void add(Film film) {
+    public void saveFilm(Film film) {
         filmRepository.save(film);
     }
 
     @Override
-    public void delete(Film film) {
+    public void deleteFilm(Film film) {
         filmRepository.delete(film);
     }
 
-    @Override
-    public void edit(Film film) {
-        filmRepository.save(film);
-    }
-
-    @Override
-    public Film getById(int id) {
-        return filmRepository.findById(id).orElse(null);
-    }
 }

@@ -1,4 +1,4 @@
-package ru.micron.exception_handling;
+package ru.micron.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

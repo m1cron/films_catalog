@@ -1,7 +1,7 @@
 package ru.micron.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.micron.model.User;
+import ru.micron.model.user.User;
 
 import java.util.Optional;
 

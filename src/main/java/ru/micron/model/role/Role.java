@@ -1,6 +1,7 @@
-package ru.micron.model;
+package ru.micron.model.role;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import ru.micron.model.Permission;
 
 import java.util.Set;
 import java.util.stream.Collectors;
