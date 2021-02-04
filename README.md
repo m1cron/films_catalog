@@ -1,8 +1,5 @@
 # Simple Film Catalog
 
-![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/1.png)
-![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/2.png)
-![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/3.png)
 ![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/4.png)
 ![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/5.png)
 
