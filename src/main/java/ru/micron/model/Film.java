@@ -1,39 +1,39 @@
 package ru.micron.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "films")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Film {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "year")
-    private int year;
+    private Integer year;
 
     @Column(name = "genre")
     private String genre;
 
     @Column(name = "watched")
-    private boolean watched;
+    private Boolean watched;
 
-    @Override
-    public String toString() {
-        return "Film{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", genre='" + genre + '\'' +
-                ", watched=" + watched +
-                '}';
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "film_id")
+    private List<Person> persons;
+
 }

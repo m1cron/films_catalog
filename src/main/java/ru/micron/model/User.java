@@ -1,8 +1,8 @@
-package ru.micron.model.user;
+package ru.micron.model;
 
 import lombok.Data;
 import ru.micron.model.role.Role;
-import ru.micron.model.Status;
+import ru.micron.model.role.Status;
 
 import javax.persistence.*;
 

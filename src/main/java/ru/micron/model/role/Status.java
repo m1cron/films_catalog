@@ -1,4 +1,4 @@
-package ru.micron.model;
+package ru.micron.model.role;
 
 public enum Status {
     ACTIVE,
