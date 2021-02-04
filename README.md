@@ -15,5 +15,6 @@ Spring Security
 Spring MVC 5
 Hibernate 5
 H2 Database
-Log4j2
+Gradle
+Logback or Log4j2
 ```
