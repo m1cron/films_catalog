@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "films")
@@ -31,8 +31,8 @@ public class Film {
     @Column(name = "watched")
     private Boolean watched;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
-    private List<User> users;
+    private Set<User> users;
 
 }

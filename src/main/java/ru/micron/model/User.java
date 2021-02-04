@@ -1,14 +1,17 @@
 package ru.micron.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "users")
 @Data
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +34,8 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
 }
