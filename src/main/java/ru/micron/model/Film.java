@@ -1,6 +1,5 @@
 package ru.micron.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +33,6 @@ public class Film {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
-    private List<Person> persons;
+    private List<User> users;
 
 }

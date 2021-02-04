@@ -1,5 +1,4 @@
-CREATE TABLE films
-(
+CREATE TABLE films (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
     year INT,
@@ -16,35 +15,39 @@ VALUES
         ('Gunfight at the O.K. Corral', 1957, 'western', 0),
         ('Die Hard', 1988, 'action', 1);
 
-CREATE TABLE users
-(
-    id BIGINT AUTO_INCREMENT,
-    login VARCHAR(255) NOT NULL,
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(10) DEFAULT 'USER' NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(100),
+
+    status VARCHAR(10) DEFAULT 'ROLE_USER' NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP()
+);
+CREATE UNIQUE INDEX USERS_EMAIL_UINDEX ON users (username);
+
+INSERT INTO users (username,password)
+VALUES      ('user', '$2a$04$c53gTrfbot9lcL5i1p0KYOcpwiEKR2Y0yPdDoKGtfjCnjF4D.PkZ.'),
+            ('admin', '$2a$04$c53gTrfbot9lcL5i1p0KYOcpwiEKR2Y0yPdDoKGtfjCnjF4D.PkZ.');
+
+CREATE TABLE roles (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(20) UNIQUE NOT NULL,
     status VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,
-    CONSTRAINT USERS_PK PRIMARY KEY (id)
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP()
 );
-CREATE UNIQUE INDEX USERS_EMAIL_UINDEX ON users (login);
+INSERT INTO roles (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN');
 
-INSERT INTO users (login,password) VALUES ('user', '$2y$12$pZ3657DCwDaArV/AW35WyOToe9HYURHsoGQ9HHXhcaPZ4TRxI1nU.');
-INSERT INTO users (login,password,role) VALUES ('admin', '$2y$12$CEmKhDb/Y2GwwI8gZdHUCeQp5aB.ZCt119g3YTReQkzkzqZzXzjka', 'ADMIN');
-
-CREATE TABLE persons
-(
-	id BIGINT PRIMARY KEY AUTO_INCREMENT,
-	film_id BIGINT REFERENCES films(id),
-	first_name VARCHAR(50) NOT NULL,
-	last_name VARCHAR(100) NOT NULL,
-	role VARCHAR(15) DEFAULT 'ACTOR' NOT NULL
+CREATE TABLE user_roles (
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    UNIQUE (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
-
-INSERT INTO persons (film_id, first_name, last_name)
-VALUES
-        (1, 'employee', 'employee'),
-        (1, 'employee1', 'employee1'),
-        (3, 'adsdfgfgadfg', 'adfsewrtgadgf'),
-        (4, 'test12334', 'test12314'),
-        (5, 'dfgpsdfgiubae0g', 'dagfhrashy');
-
-
+INSERT INTO user_roles (user_id, role_id)
+VALUES (1, 1), (2, 1);

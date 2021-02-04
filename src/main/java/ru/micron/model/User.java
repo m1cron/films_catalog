@@ -1,32 +1,38 @@
 package ru.micron.model;
 
 import lombok.Data;
-import ru.micron.model.role.Role;
-import ru.micron.model.role.Status;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Data
 @Entity
 @Table(name = "users")
-public class User {
+@Data
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "login")
-    private String login;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
+    @Column(name = "last_name")
+    private String lastName;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles;
 
 }

@@ -1,8 +1,10 @@
 package ru.micron.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.micron.dto.AuthRequestDTO;
 import ru.micron.model.User;
-import ru.micron.repository.UserRepository;
-import ru.micron.security.JwtTokenProvider;
+import ru.micron.security.jwt.JwtTokenProvider;
+import ru.micron.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,28 +27,32 @@ import java.util.Map;
 @RequestMapping("/api/v1/auth")
 public class AuthRestControllerV1 {
 
-    private final AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    public AuthRestControllerV1(AuthenticationManager authenticationManager, UserRepository userRepository, JwtTokenProvider jwtTokenProvider) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequestDTO request) {
+    public ResponseEntity<?> authenticate(@RequestBody AuthRequestDTO requestDTO) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
-            User user = userRepository.findByLogin(request.getLogin()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
-            String token = jwtTokenProvider.createToken(request.getLogin(), user.getRole().name());
+            String username = requestDTO.getUsername();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDTO.getPassword()));
+            User user = userService.findByUsername(username);
+            if (user == null) {
+                throw new UsernameNotFoundException("User with username: " + username + " not found");
+            }
+            String token = jwtTokenProvider.createToken(username, user.getRoles());
             Map<Object, Object> response = new HashMap<>();
-            response.put("login", request.getLogin());
+            response.put("username", username);
             response.put("token", token);
+            System.out.println(requestDTO + "\n" + token);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            return new ResponseEntity<>("Invalid login/password combination", HttpStatus.FORBIDDEN);
+            throw new BadCredentialsException("Invalid username or password");
         }
     }
 
