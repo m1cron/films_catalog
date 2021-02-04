@@ -26,8 +26,7 @@ public class FilmRestControllerV1 {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('films:read')")
-    public Film getFilmById(@PathVariable int id) {
+    public Film getFilmById(@PathVariable Long id) {
         Film film = filmService.getFilm(id);
         if (film == null) {
             throw new NoSuchFilmException(String.format("There is no film with ID = %d in Database", id));
@@ -36,22 +35,19 @@ public class FilmRestControllerV1 {
     }
 
     @PostMapping()
-    @PreAuthorize("hasAuthority('films:write')")
     public Film addFilm(@RequestBody Film film) {
         filmService.saveFilm(film);
         return film;
     }
 
     @PutMapping()
-    @PreAuthorize("hasAuthority('films:write')")
     public Film editFilm(@RequestBody Film film) {
         filmService.saveFilm(film);
         return film;
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('films:write')")
-    public String deleteFilm(@PathVariable int id) {
+    public String deleteFilm(@PathVariable Long id) {
         Film film = filmService.getFilm(id);
         if (film == null) {
             throw new NoSuchFilmException(String.format("There is no film with ID = %d in Database", id));

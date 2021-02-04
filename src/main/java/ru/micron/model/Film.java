@@ -31,7 +31,7 @@ public class Film {
     @Column(name = "watched")
     private Boolean watched;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "film_id")
     private List<User> users;
 

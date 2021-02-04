@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.micron.model.Role;
+import ru.micron.model.Roles;
 import ru.micron.model.Status;
 import ru.micron.model.User;
 import ru.micron.repository.RoleRepository;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        Role roleUser = roleRepository.findByName("ROLE_USER");
+        Role roleUser = roleRepository.findByName(Roles.ROLE_USER.name());
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         User result = userRepository.findByUsername(username);
-        log.info("IN findByUsername - user: {} found by username: {}", result, username);
+        log.info("IN findByUsername - user found by username: {}", username);
         return result;
     }
 
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
         if (result == null) {
             log.warn("IN findById - no user found by id: {}", id);
         }
-        log.info("IN findById - user: {} found by id: {}", result, id);
+        log.info("IN findById - user found by id: {}", id);
         return result;
     }
 

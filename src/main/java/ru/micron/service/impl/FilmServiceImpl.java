@@ -19,7 +19,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Film getFilm(int id) {
+    public Film getFilm(Long id) {
         return filmRepository.findById(id).orElse(null);
     }
 

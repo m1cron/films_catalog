@@ -22,8 +22,8 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     first_name VARCHAR(50),
     last_name VARCHAR(100),
-
-    status VARCHAR(10) DEFAULT 'ROLE_USER' NOT NULL,
+    film_id BIGINT REFERENCES films(id),
+    status VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP()
 );
