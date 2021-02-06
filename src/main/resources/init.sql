@@ -40,7 +40,7 @@ CREATE TABLE roles (
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP()
 );
-INSERT INTO roles (id, name) VALUES (1, 'USER'), (2, 'ADMIN'), (3, 'ACTOR'), (4, 'PRODUCER');
+INSERT INTO roles (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN'), (3, 'ROLE_ACTOR'), (4, 'ROLE_PRODUCER');
 
 CREATE TABLE user_roles (
     user_id BIGINT NOT NULL,
@@ -52,5 +52,5 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES (1,1),
        (1,3),
        (1,4),
-       (2,1),
-       (2,2);
+       (2,2),
+       (2,4);

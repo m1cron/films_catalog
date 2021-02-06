@@ -1,4 +1,4 @@
-package ru.micron.rest;
+package ru.micron.rest.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

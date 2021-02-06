@@ -55,6 +55,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         User result = userRepository.findUserByUsername(username);
+        if (result == null) {
+            log.warn("IN findByUsername - no user found by username: {}", username);
+        }
         log.info("IN findByUsername - user found by username: {}", username);
         return result;
     }
@@ -70,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
         log.info("IN deleteUser - user with id: {} successfully deleted", id);
     }

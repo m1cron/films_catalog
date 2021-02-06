@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<FilmIncorrectData> handleException(NoSuchFilmException exception) {
+    public ResponseEntity<FilmIncorrectData> handleException(NoSuchEntityException exception) {
         FilmIncorrectData data = new FilmIncorrectData();
         data.setInfo(exception.getMessage());
         return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);

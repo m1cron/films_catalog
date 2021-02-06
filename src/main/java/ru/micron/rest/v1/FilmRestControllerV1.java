@@ -1,8 +1,9 @@
-package ru.micron.rest;
+package ru.micron.rest.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.micron.exception.NoSuchFilmException;
+import ru.micron.exception.NoSuchEntityException;
 import ru.micron.model.Film;
 import ru.micron.service.FilmService;
 
@@ -21,37 +22,37 @@ public class FilmRestControllerV1 {
 
     @GetMapping()
     public List<Film> allFilms() {
-        return filmService.getAllFilms();
+        return filmService.getAll();
     }
 
     @GetMapping(value = "/{id}")
     public Film getFilmById(@PathVariable Long id) {
-        Film film = filmService.getFilm(id);
+        Film film = filmService.getById(id);
         if (film == null) {
-            throw new NoSuchFilmException(String.format("There is no film with ID = %d in Database", id));
+            throw new NoSuchEntityException(String.format("There is no film with ID = %d in Database", id));
         }
         return film;
     }
 
     @PostMapping()
     public Film addFilm(@RequestBody Film film) {
-        filmService.saveFilm(film);
+        filmService.save(film);
         return film;
     }
 
     @PutMapping()
     public Film editFilm(@RequestBody Film film) {
-        filmService.saveFilm(film);
+        filmService.save(film);
         return film;
     }
 
     @DeleteMapping("/{id}")
     public String deleteFilm(@PathVariable Long id) {
-        Film film = filmService.getFilm(id);
+        Film film = filmService.getById(id);
         if (film == null) {
-            throw new NoSuchFilmException(String.format("There is no film with ID = %d in Database", id));
+            throw new NoSuchEntityException(String.format("There is no film with ID = %d in Database", id));
         }
-        filmService.deleteFilm(film);
+        filmService.deleteById(id);
         return String.format("Film with ID = %d was deleted", id);
     }
 
