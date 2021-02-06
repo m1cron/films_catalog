@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        Role roleUser = roleRepository.findByName(Roles.ROLE_USER.name());
+        Role roleUser = roleRepository.findByName(Roles.USER.name());
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        User result = userRepository.findByUsername(username);
+        User result = userRepository.findUserByUsername(username);
         log.info("IN findByUsername - user found by username: {}", username);
         return result;
     }

@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EntityScan("ru.micron.model")
 @EnableJpaRepositories("ru.micron.repository")
-public class WebApplication {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(WebApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

@@ -8,7 +8,7 @@ import ru.micron.service.FilmService;
 
 import java.util.List;
 
-@Service("filmServiceImpl")
+@Service
 public class FilmServiceImpl implements FilmService {
 
     private final FilmRepository filmRepository;

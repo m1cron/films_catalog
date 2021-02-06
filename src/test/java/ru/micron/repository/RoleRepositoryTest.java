@@ -15,27 +15,31 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 class RoleRepositoryTest {
 
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private RoleRepository roleRepository;
+    public RoleRepositoryTest(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Test
     void crudTest() {
         Role role = new Role();
-        role.setName(Roles.ROLE_USER.name());
+        role.setName(Roles.USER.name());
         roleRepository.save(role);
-        role.setName(Roles.ROLE_ACTOR.name());
+        role.setName(Roles.ACTOR.name());
         roleRepository.save(role);
-        assertThat(roleRepository.findByName(Roles.ROLE_ACTOR.name())).isNotNull();
+        assertThat(roleRepository.findByName(Roles.ACTOR.name())).isNotNull();
         roleRepository.delete(role);
     }
 
     @Test
     @Sql("role.sql")
     void findByName() {
-        assertThat(roleRepository.findByName(Roles.ROLE_USER.name())).isNotEqualTo(Roles.ROLE_USER.name());
-        assertThat(roleRepository.findByName(Roles.ROLE_ACTOR.name())).isNotEqualTo(Roles.ROLE_ACTOR.name());
-        assertThat(roleRepository.findByName(Roles.ROLE_ADMIN.name())).isNotEqualTo(Roles.ROLE_ADMIN.name());
-        assertThat(roleRepository.findByName(Roles.ROLE_PRODUCER.name())).isNotEqualTo(Roles.ROLE_PRODUCER.name());
+        assertThat(roleRepository.findByName(Roles.USER.name())).isNotEqualTo(Roles.USER.name());
+        assertThat(roleRepository.findByName(Roles.ACTOR.name())).isNotEqualTo(Roles.ACTOR.name());
+        assertThat(roleRepository.findByName(Roles.ADMIN.name())).isNotEqualTo(Roles.ADMIN.name());
+        assertThat(roleRepository.findByName(Roles.PRODUCER.name())).isNotEqualTo(Roles.PRODUCER.name());
     }
 
 }

@@ -29,9 +29,9 @@ CREATE TABLE users (
 );
 CREATE UNIQUE INDEX USERS_EMAIL_UINDEX ON users (username);
 
-INSERT INTO users (username,password, film_id)
-VALUES      ('user', '$2a$04$c53gTrfbot9lcL5i1p0KYOcpwiEKR2Y0yPdDoKGtfjCnjF4D.PkZ.',1),
-            ('admin', '$2a$04$c53gTrfbot9lcL5i1p0KYOcpwiEKR2Y0yPdDoKGtfjCnjF4D.PkZ.',1);
+INSERT INTO users (username,password,film_id)
+VALUES      ('user', '$2y$12$2fBeXbxyuaCk8KWNkwA7nee/E4HQQNMc1qnP2Hi93oy2xDWrxJtAa', 1),
+            ('admin', '$2y$12$lF9vTEu4wDd3L0oPIJyPbeO/9mCr69.CkNHDHmGLR0J7XBjCPimFa', 1);
 
 CREATE TABLE roles (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -40,14 +40,17 @@ CREATE TABLE roles (
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
     updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP()
 );
-INSERT INTO roles (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN'), (3, 'ROLE_ACTOR'), (4, 'ROLE_PRODUCER');
+INSERT INTO roles (id, name) VALUES (1, 'USER'), (2, 'ADMIN'), (3, 'ACTOR'), (4, 'PRODUCER');
 
 CREATE TABLE user_roles (
     user_id BIGINT NOT NULL,
     role_id BIGINT NOT NULL,
-    UNIQUE (user_id, role_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 INSERT INTO user_roles (user_id, role_id)
-VALUES (1, 1), (2, 1), (2, 3);
+VALUES (1,1),
+       (1,3),
+       (1,4),
+       (2,1),
+       (2,2);
