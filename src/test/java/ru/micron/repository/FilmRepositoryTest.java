@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.micron.model.Actor;
 import ru.micron.model.Film;
 
 import java.util.Objects;
@@ -19,12 +20,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class FilmRepositoryTest {
 
     private final FilmRepository filmRepository;
-    private final UserRepository userRepository;
 
     @Autowired
-    public FilmRepositoryTest(FilmRepository filmRepository, UserRepository userRepository) {
+    public FilmRepositoryTest(FilmRepository filmRepository) {
         this.filmRepository = filmRepository;
-        this.userRepository = userRepository;
     }
 
     @Test
@@ -34,7 +33,10 @@ class FilmRepositoryTest {
 
         Film film = new Film();
         film.setGenre("test");
-        film.setUsers(Stream.of(userRepository.findUserByUsername("user")).collect(Collectors.toSet()));
+        Actor actor = new Actor();
+        actor.setFirstName("123");
+        actor.setLastName("123");
+        film.setActors(Stream.of(actor).collect(Collectors.toList()));
         filmRepository.save(film);
         assertThat(Objects.requireNonNull(Objects.requireNonNull(filmRepository.findById(4L).orElse(null)).getGenre())).isEqualTo("test");
 

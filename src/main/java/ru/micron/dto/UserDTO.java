@@ -2,12 +2,14 @@ package ru.micron.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.micron.model.Role;
 import ru.micron.model.User;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
     private Long id;

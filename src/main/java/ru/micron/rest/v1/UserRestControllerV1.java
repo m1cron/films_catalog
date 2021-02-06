@@ -21,7 +21,7 @@ public class UserRestControllerV1 {
 
     @GetMapping()
     public List<User> allUsers() {
-        return userService.getAll();
+        return userService.findAll();
     }
 
     @GetMapping(value = "/{id}")
@@ -35,8 +35,7 @@ public class UserRestControllerV1 {
 
     @PostMapping()
     public User addUser(@RequestBody User user) {
-        userService.register(user);
-        return user;
+        return userService.register(user);
     }
 
     // TODO edit User method

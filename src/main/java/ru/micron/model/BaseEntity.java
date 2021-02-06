@@ -9,8 +9,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import javax.persistence.*;
 import java.util.Date;
 
-@MappedSuperclass
 @Data
+@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseEntity {

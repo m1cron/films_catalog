@@ -12,6 +12,7 @@ import ru.micron.repository.RoleRepository;
 import ru.micron.repository.UserRepository;
 import ru.micron.service.UserService;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, EntityManager entityManager) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> findAll() {
         List<User> result = userRepository.findAll();
         log.info("IN getAll - {} user found", result.size());
         return result;
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
-        log.info("IN deleteUser - user with id: {} successfully deleted", id);
+        log.info("IN deleteById - user with id: {} successfully deleted", id);
     }
 
 }

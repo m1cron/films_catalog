@@ -23,6 +23,7 @@ class RoleRepositoryTest {
     }
 
     @Test
+    @Sql("role1.sql")
     void crudTest() {
         Role role = new Role();
         role.setName(Roles.USER.name());
@@ -31,6 +32,7 @@ class RoleRepositoryTest {
         roleRepository.save(role);
         assertThat(roleRepository.findByName(Roles.ACTOR.name())).isNotNull();
         roleRepository.delete(role);
+        System.out.println(roleRepository.findAll().get(1).getUsers());
     }
 
     @Test

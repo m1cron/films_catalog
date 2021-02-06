@@ -1,7 +1,6 @@
 package ru.micron.rest.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.micron.exception.NoSuchEntityException;
 import ru.micron.model.Film;
@@ -22,12 +21,12 @@ public class FilmRestControllerV1 {
 
     @GetMapping()
     public List<Film> allFilms() {
-        return filmService.getAll();
+        return filmService.findAll();
     }
 
     @GetMapping(value = "/{id}")
     public Film getFilmById(@PathVariable Long id) {
-        Film film = filmService.getById(id);
+        Film film = filmService.findById(id);
         if (film == null) {
             throw new NoSuchEntityException(String.format("There is no film with ID = %d in Database", id));
         }
@@ -48,7 +47,7 @@ public class FilmRestControllerV1 {
 
     @DeleteMapping("/{id}")
     public String deleteFilm(@PathVariable Long id) {
-        Film film = filmService.getById(id);
+        Film film = filmService.findById(id);
         if (film == null) {
             throw new NoSuchEntityException(String.format("There is no film with ID = %d in Database", id));
         }

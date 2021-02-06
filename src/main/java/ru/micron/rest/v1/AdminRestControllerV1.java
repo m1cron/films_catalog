@@ -24,7 +24,7 @@ public class AdminRestControllerV1 {
 
     @GetMapping()
     public List<User> allUsers() {
-        return userService.getAll();
+        return userService.findAll();
     }
 
     @GetMapping(value = "users/{id}")

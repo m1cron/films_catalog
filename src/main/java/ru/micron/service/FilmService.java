@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface FilmService {
 
-    Film getById(Long id);
+    Film findById(Long id);
 
-    List<Film> getAll();
+    List<Film> findAll();
 
     void save(Film object);
 

@@ -3,9 +3,9 @@ CREATE TABLE films (
     title VARCHAR(100) NOT NULL,
     year INT,
     genre VARCHAR(20),
-    watched BIT DEFAULT FALSE NOT NULL
+    watched BIT DEFAULT FALSE NOT NULL,
+    UNIQUE (title)
 );
-CREATE UNIQUE INDEX films_title_uindex ON films (title);
 
 INSERT INTO films (title,year,genre, watched)
 VALUES
@@ -22,16 +22,15 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     first_name VARCHAR(50),
     last_name VARCHAR(100),
-    film_id BIGINT REFERENCES films(id),
     status VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-    updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP()
+    updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP(),
+    UNIQUE (username)
 );
-CREATE UNIQUE INDEX USERS_EMAIL_UINDEX ON users (username);
 
-INSERT INTO users (username,password,film_id)
-VALUES      ('user', '$2y$12$2fBeXbxyuaCk8KWNkwA7nee/E4HQQNMc1qnP2Hi93oy2xDWrxJtAa', 1),
-            ('admin', '$2y$12$lF9vTEu4wDd3L0oPIJyPbeO/9mCr69.CkNHDHmGLR0J7XBjCPimFa', 1);
+INSERT INTO users (username,password)
+VALUES      ('user', '$2y$12$2fBeXbxyuaCk8KWNkwA7nee/E4HQQNMc1qnP2Hi93oy2xDWrxJtAa'),
+            ('admin', '$2y$12$lF9vTEu4wDd3L0oPIJyPbeO/9mCr69.CkNHDHmGLR0J7XBjCPimFa');
 
 CREATE TABLE roles (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -49,8 +48,48 @@ CREATE TABLE user_roles (
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 INSERT INTO user_roles (user_id, role_id)
-VALUES (1,1),
-       (1,3),
-       (1,4),
-       (2,2),
-       (2,4);
+VALUES (1,1), (1,3), (1,4), (2,2), (2,4);
+
+CREATE TABLE actors (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(100),
+    status VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP(),
+    UNIQUE (first_name, last_name)
+);
+INSERT INTO actors (first_name, last_name)
+VALUES  ('adgfdagf', 'dafgdagfdasfg'),
+        ('adgfdasgaagf', 'dafdfggdagfdasfg'),
+        ('adgfdagf', 'dafgdadfgagfdasfg'),
+        ('adgadfg23fdagf', 'dafgadfgdagfdasfg');
+
+CREATE TABLE actors_films (
+    actor_id BIGINT NOT NULL,
+    film_id BIGINT NOT NULL,
+    PRIMARY KEY (actor_id, film_id),
+    FOREIGN KEY (actor_id)  REFERENCES actors(id),
+    FOREIGN KEY (film_id)   REFERENCES films(id)
+);
+INSERT INTO actors_films (actor_id, film_id)
+VALUES (2,1), (2,3), (2,4), (4,2), (4,4), (3,3);
+
+
+CREATE TABLE user_fav_films (
+    user_id BIGINT NOT NULL,
+    film_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (film_id) REFERENCES films(id)
+);
+INSERT INTO user_fav_films (user_id, film_id)
+VALUES (1,2), (2,3), (2,2);
+
+CREATE TABLE actors_roles (
+    actor_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    FOREIGN KEY (actor_id) REFERENCES actors(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+INSERT INTO actors_roles (actor_id, role_id)
+VALUES (1,3), (1,4), (2,4), (3,3), (4,3);

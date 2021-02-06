@@ -1,5 +1,7 @@
 package ru.micron.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,22 +12,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
-@Table(name = "users")
+@Table(name = "actors")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity {
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
+public class Actor extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -35,16 +28,13 @@ public class User extends BaseEntity {
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    @JoinTable(name = "actors_roles",
+            joinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_fav_films",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"))
-    private List<Film> favoriteFilms = new ArrayList<>();
+    @JsonIgnoreProperties("actors")
+    @ManyToMany(mappedBy = "actors")
+    private List<Film> films = new ArrayList<>();
 
 }

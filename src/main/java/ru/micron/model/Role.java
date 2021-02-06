@@ -1,11 +1,13 @@
 package ru.micron.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,8 +21,8 @@ public class Role extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    // TODO how fix this?
-/*    @ManyToMany(mappedBy = "roles")
-    private List<User> users;*/
+    @JsonBackReference
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users = new ArrayList<>();
 
 }
