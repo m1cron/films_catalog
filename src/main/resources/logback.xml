@@ -51,17 +51,14 @@
 
     <logger name="ru.micron" additivity="false" level="info">
         <appender-ref ref="app"/>
-        <appender-ref ref="STDOUT"/>
     </logger>
 
     <logger name="org.springframework" level="info">
         <appender-ref ref="spring"/>
-        <appender-ref ref="STDOUT"/>
     </logger>
 
     <logger name="org.hibernate" level="info">
         <appender-ref ref="hibernate" />
-        <appender-ref ref="STDOUT" />
     </logger>
 
     <root level="info">

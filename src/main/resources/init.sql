@@ -4,6 +4,9 @@ CREATE TABLE films (
     year INT,
     genre VARCHAR(20),
     watched BIT DEFAULT FALSE NOT NULL,
+    status VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    updated VARCHAR(40) DEFAULT CURRENT_TIMESTAMP(),
     UNIQUE (title)
 );
 
