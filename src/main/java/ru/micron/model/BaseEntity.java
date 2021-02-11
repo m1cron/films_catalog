@@ -28,7 +28,7 @@ public class BaseEntity {
     private Date updated;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false, columnDefinition = "ACTIVE")
     private Status status;
 
 }

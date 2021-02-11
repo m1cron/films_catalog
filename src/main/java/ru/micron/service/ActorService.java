@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ActorService {
 
-    Actor findById(Long id);
-
     List<Actor> findAll();
+
+    Actor findById(Long id);
 
     void save(Actor actor);
 

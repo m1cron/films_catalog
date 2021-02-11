@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.micron.dto.UserDTO;
 import ru.micron.exception.NoSuchEntityException;
 import ru.micron.model.User;
 import ru.micron.service.UserService;
@@ -12,7 +11,7 @@ import ru.micron.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/admin/")
+@RequestMapping(value = "/api/v1/admin")
 public class AdminRestControllerV1 {
 
     private final UserService userService;
@@ -22,22 +21,21 @@ public class AdminRestControllerV1 {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public List<User> allUsers() {
         return userService.findAll();
     }
 
-    @GetMapping(value = "users/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        if (user == null) {
+    @GetMapping(value = "/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User result = userService.findById(id);
+        if (result == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        UserDTO result = UserDTO.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("users/")
+    @PostMapping("/users")
     public User addUser(@RequestBody User user) {
         userService.register(user);
         return user;
@@ -45,7 +43,7 @@ public class AdminRestControllerV1 {
 
     // TODO edit User method
 
-    @DeleteMapping("users/{id}")
+    @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable Long id) {
         User user = userService.findById(id);
         if (user == null) {

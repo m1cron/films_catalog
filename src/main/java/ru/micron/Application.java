@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "ru.micron")
 @EntityScan("ru.micron.model")
 @EnableJpaRepositories("ru.micron.repository")
 @EnableJpaAuditing

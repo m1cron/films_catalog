@@ -1,28 +1,27 @@
 package ru.micron.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.micron.model.Actor;
 import ru.micron.repository.ActorRepository;
 import ru.micron.service.ActorService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class ActorServiceImpl implements ActorService {
 
     private final ActorRepository actorRepository;
 
-    @Autowired
-    public ActorServiceImpl(ActorRepository actorRepository) {
-        this.actorRepository = actorRepository;
-    }
-
     @Override
     public List<Actor> findAll() {
-        return actorRepository.findAll();
+        List<Actor> result = actorRepository.findAll().stream().sorted().collect(Collectors.toList());
+        log.info("IN findAll - actors found, length: {}", result.size());
+        return result;
     }
 
     @Override

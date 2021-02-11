@@ -5,36 +5,53 @@ plugins {
 }
 
 group 'ru.micron'
-wrapper.gradleVersion = '6.7'
 version '1.0'
-sourceCompatibility = '11'
+rootProject.wrapper.gradleVersion = '6.7'
+targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_11
 
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+compileTestJava {
+    options.encoding = 'UTF-8'
 }
 
 repositories {
     mavenCentral()
 }
 
+ext {
+    ver = [
+            spring                  : '2.4.2',
+            dependencyManagement    : '1.0.11.RELEASE',
+            lombok                  : '1.18.12',
+            jjwt                    : '0.9.1',
+            h2                      : '1.4.200',
+            mapstruct               : '1.4.2.Final'
+    ]
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly group: 'com.h2database', name: 'h2'
-    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-    compileOnly 'org.projectlombok:lombok'
-    implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
-    annotationProcessor group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$ver.spring"
+    implementation "org.springframework.boot:spring-boot-starter-security:$ver.spring"
+    implementation "org.springframework.boot:spring-boot-starter-web:$ver.spring"
+    developmentOnly "org.springframework.boot:spring-boot-devtools:$ver.spring"
+
+    runtimeOnly "com.h2database:h2:$ver.h2"
+    compile "io.jsonwebtoken:jjwt:$ver.jjwt"
+
+    implementation "org.mapstruct:mapstruct:$ver.mapstruct"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$ver.mapstruct"
+
+    compileOnly "org.projectlombok:lombok:$ver.lombok"
+    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$ver.spring"
 }
 
 test {

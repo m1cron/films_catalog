@@ -1,6 +1,5 @@
 package ru.micron.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Actor extends BaseEntity {
+public class Actor extends BaseEntity implements Comparable<Actor> {
 
     @Column(name = "first_name")
     private String firstName;
@@ -37,4 +36,8 @@ public class Actor extends BaseEntity {
     @ManyToMany(mappedBy = "actors")
     private List<Film> films = new ArrayList<>();
 
+    @Override
+    public int compareTo(Actor o) {
+        return o.getFilms().size() - this.getFilms().size();
+    }
 }

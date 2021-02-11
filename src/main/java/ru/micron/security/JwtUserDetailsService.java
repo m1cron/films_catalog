@@ -1,7 +1,7 @@
 package ru.micron.security;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,16 +11,12 @@ import ru.micron.security.jwt.JwtUser;
 import ru.micron.security.jwt.JwtUserFactory;
 import ru.micron.service.UserService;
 
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
-
-    @Autowired
-    public JwtUserDetailsService(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

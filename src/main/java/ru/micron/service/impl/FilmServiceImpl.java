@@ -1,22 +1,18 @@
 package ru.micron.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.micron.repository.FilmRepository;
 import ru.micron.model.Film;
+import ru.micron.repository.FilmRepository;
 import ru.micron.service.FilmService;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class FilmServiceImpl implements FilmService {
 
     private final FilmRepository filmRepository;
-
-    @Autowired
-    public FilmServiceImpl(FilmRepository filmRepository) {
-        this.filmRepository = filmRepository;
-    }
 
     @Override
     public Film findById(Long id) {

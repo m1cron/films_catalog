@@ -1,48 +1,48 @@
 package ru.micron.rest.v1;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.micron.dto.FilmDTO;
 import ru.micron.exception.NoSuchEntityException;
+import ru.micron.mapper.FilmMapper;
 import ru.micron.model.Film;
 import ru.micron.service.FilmService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/films")
+@RequiredArgsConstructor
 public class FilmRestControllerV1 {
 
     private final FilmService filmService;
-
-    @Autowired
-    public FilmRestControllerV1(FilmService filmService) {
-        this.filmService = filmService;
-    }
+    private final FilmMapper filmMapper;
 
     @GetMapping()
-    public List<Film> allFilms() {
-        return filmService.findAll();
+    public List<FilmDTO> allFilms() {
+        return filmService.findAll().stream().map(filmMapper::toDto).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{id}")
-    public Film getFilmById(@PathVariable Long id) {
+    public FilmDTO getFilmById(@PathVariable Long id) {
         Film film = filmService.findById(id);
         if (film == null) {
             throw new NoSuchEntityException(String.format("There is no film with ID = %d in Database", id));
         }
-        return film;
+        return filmMapper.toDto(film);
     }
 
     @PostMapping()
-    public Film addFilm(@RequestBody Film film) {
+    public FilmDTO addFilm(@RequestBody Film film) {
         filmService.save(film);
-        return film;
+        return filmMapper.toDto(film);
     }
 
     @PutMapping()
-    public Film editFilm(@RequestBody Film film) {
+    public FilmDTO editFilm(@RequestBody Film film) {
         filmService.save(film);
-        return film;
+        return filmMapper.toDto(film);
     }
 
     @DeleteMapping("/{id}")
