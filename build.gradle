@@ -1,3 +1,7 @@
+group 'ru.micron'
+version '1.0'
+rootProject.wrapper.gradleVersion = '6.8'
+
 buildscript {
 
     ext {
@@ -22,16 +26,6 @@ buildscript {
 
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-}
-
-group 'ru.micron'
-version '1.0'
-rootProject.wrapper.gradleVersion = '6.8'
-
 subprojects {
     
     apply plugin: 'java'
@@ -42,17 +36,22 @@ subprojects {
 
     compileJava {
         options.encoding = 'UTF-8'
-        options.compilerArgs = [
-                '-Amapstruct.defaultComponentModel=spring'
-        ]
+        options.compilerArgs = ['-parameters', '-Xlint:unchecked']
     }
 
     compileTestJava {
         options.encoding = 'UTF-8'
+        options.compilerArgs = ['-parameters', '-Xlint:unchecked']
     }
 
     test {
         useJUnitPlatform()
     }
 
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
