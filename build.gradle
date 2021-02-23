@@ -1,59 +1,58 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.4.2'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+buildscript {
+
+    ext {
+        servicePackage = "ru.micron"
+        servicePackageSlashes = servicePackage.replace('.', '/')
+
+        ver = [
+                springBoot              : '2.4.2',
+                dependencyManagement    : '1.0.11.RELEASE',
+        ]
+
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:$ver.dependencyManagement",
+                "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot"
+    }
+
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
 group 'ru.micron'
 version '1.0'
-rootProject.wrapper.gradleVersion = '6.7'
-targetCompatibility = JavaVersion.VERSION_11
-sourceCompatibility = JavaVersion.VERSION_11
+rootProject.wrapper.gradleVersion = '6.8'
 
-compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs = [
-            '-Amapstruct.defaultComponentModel=spring'
-    ]
-}
+subprojects {
+    
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
 
-compileTestJava {
-    options.encoding = 'UTF-8'
-}
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
 
-repositories {
-    mavenCentral()
-}
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.compilerArgs = [
+                '-Amapstruct.defaultComponentModel=spring'
+        ]
+    }
 
-ext {
-    ver = [
-            spring                  : '2.4.2',
-            dependencyManagement    : '1.0.11.RELEASE',
-            lombok                  : '1.18.12',
-            jjwt                    : '0.9.1',
-            h2                      : '1.4.200',
-            mapstruct               : '1.4.2.Final'
-    ]
-}
+    compileTestJava {
+        options.encoding = 'UTF-8'
+    }
 
-dependencies {
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$ver.spring"
-    implementation "org.springframework.boot:spring-boot-starter-security:$ver.spring"
-    implementation "org.springframework.boot:spring-boot-starter-web:$ver.spring"
-    developmentOnly "org.springframework.boot:spring-boot-devtools:$ver.spring"
+    test {
+        useJUnitPlatform()
+    }
 
-    runtimeOnly "com.h2database:h2:$ver.h2"
-    compile "io.jsonwebtoken:jjwt:$ver.jjwt"
-
-    implementation "org.mapstruct:mapstruct:$ver.mapstruct"
-    annotationProcessor "org.mapstruct:mapstruct-processor:$ver.mapstruct"
-
-    compileOnly "org.projectlombok:lombok:$ver.lombok"
-    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
-
-    testImplementation "org.springframework.boot:spring-boot-starter-test:$ver.spring"
-}
-
-test {
-    useJUnitPlatform()
 }

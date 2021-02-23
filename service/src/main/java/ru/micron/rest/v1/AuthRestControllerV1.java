@@ -1,5 +1,6 @@
 package ru.micron.rest.v1;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,10 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.micron.ApiAuth;
 import ru.micron.dto.AuthRequestDTO;
 import ru.micron.model.User;
 import ru.micron.security.jwt.JwtTokenProvider;
@@ -22,17 +23,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+@Validated
 @RestController
-@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthRestControllerV1 {
+public class AuthRestControllerV1 implements ApiAuth {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequestDTO requestDTO) {
+    @ApiOperation("Authenticate user")
+    @Override
+    public ResponseEntity<?> authenticate(
+            @RequestBody AuthRequestDTO requestDTO
+    ) {
         try {
             String username = requestDTO.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDTO.getPassword()));
@@ -50,8 +54,12 @@ public class AuthRestControllerV1 {
         }
     }
 
-    @PostMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
+    @ApiOperation("Logout user")
+    @Override
+    public void logout(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
     }

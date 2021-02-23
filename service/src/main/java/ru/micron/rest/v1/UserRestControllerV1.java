@@ -1,31 +1,39 @@
 package ru.micron.rest.v1;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.micron.ApiUser;
 import ru.micron.dto.UserDTO;
 import ru.micron.exception.NoSuchEntityException;
 import ru.micron.mapper.UserMapper;
 import ru.micron.model.User;
 import ru.micron.service.UserService;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
-@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class UserRestControllerV1 {
+public class UserRestControllerV1 implements ApiUser {
 
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @GetMapping()
-    public List<UserDTO> allUsers() {
+    @ApiOperation("Get all users")
+    @Override
+    public List<UserDTO> getUsers() {
         return userService.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/{id}")
-    public UserDTO getUserById(@PathVariable Long id) {
+    @ApiOperation("Get user by id")
+    @Override
+    public UserDTO getUserById(
+            @PathVariable @Min(1) long id
+    ) {
         User user = userService.findById(id);
         if (user == null) {
             throw new NoSuchEntityException(String.format("There is no user with ID = %d in Database", id));
@@ -33,15 +41,22 @@ public class UserRestControllerV1 {
         return userMapper.toDto(user);
     }
 
-    @PostMapping()
-    public User addUser(@RequestBody User user) {
-        return userService.register(user);
+    @ApiOperation("Register user")
+    @Override
+    public UserDTO addUser(
+            @RequestBody UserDTO user
+    ) {
+        userService.register(userMapper.toEntity(user));
+        return user;
     }
 
     // TODO edit User method
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    @ApiOperation("Delete user")
+    @Override
+    public String deleteUser(
+            @PathVariable @Min(1) long id
+    ) {
         User user = userService.findById(id);
         if (user == null) {
             throw new NoSuchEntityException(String.format("There is no user with ID = %d in Database", id));

@@ -18,4 +18,6 @@ public abstract class FilmMapper {
 
     public abstract FilmDTO toDto(Film film);
 
+    public abstract Film toEntity(FilmDTO filmDTO);
+
 }

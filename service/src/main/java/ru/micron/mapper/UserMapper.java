@@ -16,4 +16,7 @@ public abstract class UserMapper {
     @Mapping(target = "favorite_films", source = "favoriteFilms")
     public abstract UserDTO toDto(User user);
 
+    @Mapping(target = "favoriteFilms", source = "favorite_films")
+    public abstract User toEntity(UserDTO userDTO);
+
 }

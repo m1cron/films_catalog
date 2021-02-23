@@ -49,7 +49,7 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="ru.micron" additivity="false" level="info">
+    <logger name="ru.micron" level="info">
         <appender-ref ref="app"/>
     </logger>
 
@@ -58,7 +58,7 @@
     </logger>
 
     <logger name="org.hibernate" level="info">
-        <appender-ref ref="hibernate" />
+        <appender-ref ref="hibernate"/>
     </logger>
 
     <root level="info">
