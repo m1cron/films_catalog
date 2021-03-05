@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: app-films-catalog-gateway
+    port: 8080
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: true
+
+server:
+  port: 8080
+  servlet:
+    encoding:
+      force-response: true
+      charset: UTF-8
+
+springfox:
+  documentation:
+    swaggerUi:
+      baseUrl: /api
+    swagger:
+      v2:
+        path: /v1/api-docs
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 30000
+        loggerLevel: FULL
+
+app:
+  feign:
+    url:
+      films: 'http://localhost:8081'
+      actors: 'http://localhost:8081'
+      auth: 'http://localhost:8081'
+      admin: 'http://localhost:8081'
+      user: 'http://localhost:8081'

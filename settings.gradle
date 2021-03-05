@@ -1,4 +1,0 @@
-rootProject.name = 'films_catalog'
-
-include 'service'
-include 'client'

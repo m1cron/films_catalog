@@ -1,6 +1,16 @@
 # Simple Film Catalog
 
-Swagger API Docs endpoint: localhost:8080/v2/api-docs
+#TODO
+```
+1. перейти на PostgreSQL в докере
+2. Подробить сервис на несколько сервисов (как минимум на API-Gateway, Auth Service, others services)
+3. Раскидать все сервисы по декер контейнерам
+4. Написать общий докер скрипт для поднятия приложения
+```
+
+Swagger API Documentation: </br>
+JSON: http://localhost:8080/v1/api-docs </br>
+HTML: http://localhost:8080/swagger-ui.html
 
 ![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/1.png)
 ![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/2.png)
