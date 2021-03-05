@@ -19,25 +19,27 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Actor extends BaseEntity implements Comparable<Actor> {
 
-    @Column(name = "first_name")
-    private String firstName;
+  @Column(name = "first_name")
+  private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+  @Column(name = "last_name")
+  private String lastName;
 
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "actors_roles",
-            joinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();
+  @JsonManagedReference
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "actors_roles",
+      joinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  private List<Role> roles = new ArrayList<>();
 
-    @JsonIgnoreProperties("actors")
-    @ManyToMany(mappedBy = "actors")
-    private List<Film> films = new ArrayList<>();
+  @JsonIgnoreProperties("actors")
+  @ManyToMany(mappedBy = "actors")
+  private List<Film> films = new ArrayList<>();
 
-    @Override
-    public int compareTo(Actor o) {
-        return o.getFilms().size() - this.getFilms().size();
-    }
+  @Override
+  public int compareTo(Actor o) {
+    return o.getFilms().size() - this.getFilms().size();
+  }
+
 }

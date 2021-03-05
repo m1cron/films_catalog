@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ActorService {
 
-    List<Actor> findAll();
+  List<Actor> findAll();
 
-    Actor findById(Long id);
+  Actor findById(Long id);
 
-    void save(Actor actor);
+  void save(Actor actor);
 
-    void deleteById(Long id);
+  void deleteById(Long id);
 }

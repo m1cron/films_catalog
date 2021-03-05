@@ -18,24 +18,24 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Film extends BaseEntity {
 
-    @Column(name = "title", nullable = false)
-    private String title;
+  @Column(name = "title", nullable = false)
+  private String title;
 
-    @Column(name = "year")
-    private Integer year;
+  @Column(name = "year")
+  private Integer year;
 
-    @Column(name = "genre")
-    private String genre;
+  @Column(name = "genre")
+  private String genre;
 
-    @Column(name = "watched")
-    private Boolean watched;
+  @Column(name = "watched")
+  private Boolean watched;
 
-    @JsonIgnoreProperties("films")
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "actors_films",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
-    private List<Actor> actors = new ArrayList<>();
+  @JsonIgnoreProperties("films")
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "actors_films",
+      joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
+  private List<Actor> actors = new ArrayList<>();
 
 }

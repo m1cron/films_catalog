@@ -7,6 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FilmIncorrectData {
 
-    private String info;
-
+  private String info;
 }

@@ -1,8 +1,8 @@
 package ru.micron.model;
 
 public enum Roles {
-    USER,
-    ADMIN,
-    ACTOR,
-    PRODUCER
+  USER,
+  ADMIN,
+  ACTOR,
+  PRODUCER
 }

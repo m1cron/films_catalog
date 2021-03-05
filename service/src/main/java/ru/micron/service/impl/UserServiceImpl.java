@@ -22,56 +22,55 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
+  private final BCryptPasswordEncoder passwordEncoder;
 
-    @Override
-    public User register(User user) {
-        Role roleUser = roleRepository.findByName(Roles.USER.name());
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
+  @Override
+  public User register(User user) {
+    Role roleUser = roleRepository.findByName(Roles.USER.name());
+    List<Role> userRoles = new ArrayList<>();
+    userRoles.add(roleUser);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setRoles(userRoles);
+    user.setStatus(Status.ACTIVE);
 
-        User registerUser = userRepository.save(user);
-        log.info("IN register - user : {} successfully registered", registerUser);
-        return registerUser;
+    User registerUser = userRepository.save(user);
+    log.info("IN register - user : {} successfully registered", registerUser);
+    return registerUser;
+  }
+
+  @Override
+  public List<User> findAll() {
+    List<User> result = userRepository.findAll();
+    log.info("IN getAll - {} user found", result.size());
+    return result;
+  }
+
+  @Override
+  public User findByUsername(String username) {
+    User result = userRepository.findUserByUsername(username);
+    if (result == null) {
+      log.warn("IN findByUsername - no user found by username: {}", username);
     }
+    log.info("IN findByUsername - user found by username: {}", username);
+    return result;
+  }
 
-    @Override
-    public List<User> findAll() {
-        List<User> result = userRepository.findAll();
-        log.info("IN getAll - {} user found", result.size());
-        return result;
+  @Override
+  public User findById(Long id) {
+    User result = userRepository.findById(id).orElse(null);
+    if (result == null) {
+      log.warn("IN findById - no user found by id: {}", id);
     }
+    log.info("IN findById - user found by id: {}", id);
+    return result;
+  }
 
-    @Override
-    public User findByUsername(String username) {
-        User result = userRepository.findUserByUsername(username);
-        if (result == null) {
-            log.warn("IN findByUsername - no user found by username: {}", username);
-        }
-        log.info("IN findByUsername - user found by username: {}", username);
-        return result;
-    }
-
-    @Override
-    public User findById(Long id) {
-        User result = userRepository.findById(id).orElse(null);
-        if (result == null) {
-            log.warn("IN findById - no user found by id: {}", id);
-        }
-        log.info("IN findById - user found by id: {}", id);
-        return result;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
-        log.info("IN deleteById - user with id: {} successfully deleted", id);
-    }
-
+  @Override
+  public void deleteById(Long id) {
+    userRepository.deleteById(id);
+    log.info("IN deleteById - user with id: {} successfully deleted", id);
+  }
 }

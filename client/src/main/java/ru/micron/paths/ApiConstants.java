@@ -6,6 +6,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiConstants {
 
-    public static final String ID = "/{id}";
-
+  public static final String ID = "/{id}";
 }

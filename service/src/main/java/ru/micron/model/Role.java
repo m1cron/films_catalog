@@ -18,11 +18,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Role extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users = new ArrayList<>();
-
+  @JsonBackReference
+  @ManyToMany(mappedBy = "roles")
+  private List<User> users = new ArrayList<>();
 }

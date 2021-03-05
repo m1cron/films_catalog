@@ -22,64 +22,66 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${jwt.header}")
-    private String authorizationHeader;
-    @Value("${jwt.secret}")
-    private String secretKey;
-    @Value("${jwt.expiration}")
-    private long validityInMilliseconds;
+  @Value("${jwt.header}")
+  private String authorizationHeader;
 
-    @Qualifier("jwtUserDetailsService")
-    @Autowired
-    private UserDetailsService userDetailsService;
+  @Value("${jwt.secret}")
+  private String secretKey;
 
-    @PostConstruct
-    protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+  @Value("${jwt.expiration}")
+  private long validityInMilliseconds;
+
+  @Qualifier("jwtUserDetailsService")
+  @Autowired
+  private UserDetailsService userDetailsService;
+
+  @PostConstruct
+  protected void init() {
+    secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+  }
+
+  public String createToken(String username, List<Role> roles) {
+    Claims claims = Jwts.claims().setSubject(username);
+    claims.put("role", getRoleNames(roles));
+    Date now = new Date();
+    Date validity = new Date(now.getTime() + validityInMilliseconds * 1000);
+
+    return Jwts.builder()
+        .setClaims(claims)
+        .setIssuedAt(now)
+        .setExpiration(validity)
+        .signWith(SignatureAlgorithm.HS256, secretKey)
+        .compact();
+  }
+
+  public Authentication getAuthentication(String token) {
+    UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+  }
+
+  public String getUsername(String token) {
+    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+  }
+
+  public String resolveToken(HttpServletRequest request) {
+    return request.getHeader(authorizationHeader);
+  }
+
+  public boolean validateToken(String token) {
+    try {
+      Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+      return !claimsJws.getBody().getExpiration().before(new Date());
+    } catch (JwtException | IllegalArgumentException e) {
+      throw new JwtAuthenticationException("JWT token is expired or invalid");
     }
+  }
 
-    public String createToken(String username, List<Role> roles) {
-        Claims claims = Jwts.claims().setSubject(username);
-        claims.put("role", getRoleNames(roles));
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds * 1000);
-
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-    }
-
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-    }
-
-    public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(authorizationHeader);
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticationException("JWT token is expired or invalid");
-        }
-    }
-
-    private List<String> getRoleNames(List<Role> userRoles) {
-        List<String> result = new ArrayList<>();
-        userRoles.forEach(role -> {
-            result.add(role.getName());
+  private List<String> getRoleNames(List<Role> userRoles) {
+    List<String> result = new ArrayList<>();
+    userRoles.forEach(
+        role -> {
+          result.add(role.getName());
         });
-        return result;
-    }
-
+    return result;
+  }
 }

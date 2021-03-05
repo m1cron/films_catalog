@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class AuthRequestDTO {
-    private String username;
-    private String password;
+public class AuthRequestDto {
+  private String username;
+  private String password;
 }

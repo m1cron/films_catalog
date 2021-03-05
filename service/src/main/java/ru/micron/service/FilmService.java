@@ -6,12 +6,11 @@ import java.util.List;
 
 public interface FilmService {
 
-    Film findById(Long id);
+  Film findById(Long id);
 
-    List<Film> findAll();
+  List<Film> findAll();
 
-    void save(Film object);
+  void save(Film object);
 
-    void deleteById(Long id);
-
+  void deleteById(Long id);
 }

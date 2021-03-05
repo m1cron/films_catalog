@@ -9,25 +9,26 @@ import ru.micron.model.Role;
 
 import java.util.List;
 
-@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+@Mapper(
+    nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
 public abstract class RoleMapper {
 
-    public static final RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
+  public static final RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
 
-    protected abstract List<String> mapToListOfDto(List<Role> roles);
+  protected abstract List<String> mapToListOfDto(List<Role> roles);
 
-    protected String mapToString(Role role) {
-        return role.getName();
-    }
+  protected String mapToString(Role role) {
+    return role.getName();
+  }
 
-    protected abstract List<Role> toListOfEntities(List<String> roles);
+  protected abstract List<Role> toListOfEntities(List<String> roles);
 
-    protected Role toEntity(String role) {
-        Role roleEntity = new Role();
-        roleEntity.setName(role);
-        return roleEntity;
-    }
+  protected Role toEntity(String role) {
+    Role roleEntity = new Role();
+    roleEntity.setName(role);
+    return roleEntity;
+  }
 
 }
