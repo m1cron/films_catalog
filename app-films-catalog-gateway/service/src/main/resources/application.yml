@@ -32,8 +32,8 @@ feign:
 app:
   feign:
     url:
-      films: 'http://localhost:8081'
-      actors: 'http://localhost:8081'
-      auth: 'http://localhost:8081'
-      admin: 'http://localhost:8081'
-      user: 'http://localhost:8081'
+      films: 'http://app-films-catalog-core:8081'
+      actors: 'http://app-films-catalog-core:8081'
+      auth: 'http://app-films-catalog-core:8081'
+      admin: 'http://app-films-catalog-core:8081'
+      user: 'http://app-films-catalog-core:8081'

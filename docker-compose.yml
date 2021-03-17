@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  core:
+    build: ./app-films-catalog-core
+    hostname: app-films-catalog-core
+
+  gateway:
+    build: ./app-films-catalog-gateway
+    links:
+      - core
+    ports:
+      - 8080:8080
