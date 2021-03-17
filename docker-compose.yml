@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres
+    hostname: database
+
+  core:
+    build: ./app-films-catalog-core
+    hostname: app-films-catalog-core
+    links:
+      - database
+
+  gateway:
+    build: ./app-films-catalog-gateway
+    links:
+      - core
+    ports:
+      - 8080:8080

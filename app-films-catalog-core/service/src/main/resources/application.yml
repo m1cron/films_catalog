@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: app-films-catalog-core
+    port: 8081
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: true
+
+  datasource:
+    url: jdbc:postgresql://${postgres.host}/${postgres.dbname}?currentSchema=${postgres.schema}
+    username: ${postgres.user}
+    password: ${postgres.password}
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+    hikari:
+      maximum-pool-size: 6
+      minimum-idle: 2
+      connection-timeout: 10000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    show_sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        jdbc:
+          fetch_size: 100
+        use_lazy_proxy_factory: true
+        enable_lazy_load_no_trans: true
+
+  liquibase:
+    enabled: true
+    change-log: 'classpath:liquibase/changelog-master.yml'
+    parameters:
+      schema: ${postgres.schema}
+      user: ${postgres.user}
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+
+server:
+  port: 8081
+  servlet:
+    encoding:
+      force-response: true
+      charset: UTF-8
+
+jwt:
+  header: Authorization
+  secret: film
+  expiration: 604800
+
+springfox:
+  documentation:
+    swaggerUi:
+      baseUrl: /api
+    swagger:
+      v2:
+        path: /v1/api-docs

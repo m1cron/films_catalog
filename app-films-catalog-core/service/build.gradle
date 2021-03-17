@@ -1,0 +1,91 @@
+archivesBaseName = rootProject.name
+group = parent.group
+version = parent.version
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+
+application {
+    mainClassName = "${servicePackage}.Application"
+}
+
+ext {
+    ver = [
+            swagger2                : '2.9.2',
+            swaggerUi               : '2.9.2',
+            swaggerAnnotations      : '2.1.1',
+            lombok                  : '1.18.12',
+            jjwt                    : '0.9.1',
+            mapstruct               : '1.4.2.Final',
+            logback                 : '1.2.3',
+            logstashLogbackEncoder  : '6.2',
+            validationApi           : '2.0.1.Final',
+            hvalidator              : '6.0.2.Final',
+            openFeign               : '2.2.3.RELEASE'
+    ]
+}
+
+dependencies {
+    // Modules
+    implementation project(":client")
+
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$ver.openFeign"
+
+    // Swagger
+    implementation "io.springfox:springfox-swagger2:$ver.swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$ver.swaggerUi"
+    implementation "io.swagger.core.v3:swagger-annotations:$ver.swaggerAnnotations"
+
+    // Validation
+    implementation "org.hibernate.validator:hibernate-validator:$ver.hvalidator"
+    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$ver.hvalidator"
+    implementation "javax.validation:validation-api:$ver.validationApi"
+
+    // Logback
+    implementation "ch.qos.logback:logback-classic:$ver.logback"
+    implementation "net.logstash.logback:logstash-logback-encoder:$ver.logstashLogbackEncoder"
+
+    // Database
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
+
+    // JWT
+    compile "io.jsonwebtoken:jjwt:$ver.jjwt"
+
+    // Mapstruct
+    implementation "org.mapstruct:mapstruct:$ver.mapstruct"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$ver.mapstruct"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$ver.lombok"
+    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+
+    // Lombok Test
+    testCompileOnly "org.projectlombok:lombok:$ver.lombok"
+    testAnnotationProcessor "org.projectlombok:lombok:$ver.lombok"
+
+    // Test
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+configurations.all {
+    all*.exclude group: "commons-logging", module: "commons-logging"
+    all*.exclude group: "log4j"
+    all*.exclude group: "org.apache.logging.log4j"
+    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    all*.exclude group: "org.slf4j", module: "slf4j-simple"
+    all*.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
