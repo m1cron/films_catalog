@@ -1,5 +1,5 @@
 postgres:
-  host: 'database:5432'
+  host: 'localhost:5432'
   schema: 'public'
   dbname: 'postgres'
   user: 'postgres'
