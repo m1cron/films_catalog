@@ -16,7 +16,6 @@ ext {
             swaggerAnnotations      : '2.1.1',
             lombok                  : '1.18.12',
             jjwt                    : '0.9.1',
-            h2                      : '1.4.200',
             mapstruct               : '1.4.2.Final',
             logback                 : '1.2.3',
             logstashLogbackEncoder  : '6.2',
@@ -52,7 +51,8 @@ dependencies {
     implementation "net.logstash.logback:logstash-logback-encoder:$ver.logstashLogbackEncoder"
 
     // Database
-    runtimeOnly "com.h2database:h2:$ver.h2"
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
 
     // JWT
     compile "io.jsonwebtoken:jjwt:$ver.jjwt"
