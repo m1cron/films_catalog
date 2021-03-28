@@ -21,19 +21,21 @@ springfox:
       v2:
         path: /v1/api-docs
 
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 30000
-        readTimeout: 30000
-        loggerLevel: FULL
-
-app:
-  feign:
-    url:
-      films: 'http://app-films-catalog-core:8081'
-      actors: 'http://app-films-catalog-core:8081'
-      auth: 'http://app-films-catalog-core:8081'
-      admin: 'http://app-films-catalog-core:8081'
-      user: 'http://app-films-catalog-core:8081'
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
+  routes:
+    auth:
+      path: /auth/**
+      url: ${url.zuul.proxy.auth}
+    admin:
+      path: /admin/**
+      url: ${url.zuul.proxy.admin}
+    users:
+      path: /users/**
+      url: ${url.zuul.proxy.users}
+    films:
+      path: /films/**
+      url: ${url.zuul.proxy.films}
+    actors:
+      path: /actors/**
+      url: ${url.zuul.proxy.actors}

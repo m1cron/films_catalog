@@ -1,12 +1,11 @@
-.idea
+**/.idea
 .git
 .gitignore
-screens/
+**/screens/
 *.md
 LICENSE
 .gradle/
 gradle/
-gradlew
-gradlew.bat
-logs/
+**/gradlew*
+**/logs/
 build/

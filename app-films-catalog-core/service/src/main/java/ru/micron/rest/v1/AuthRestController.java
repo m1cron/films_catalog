@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.micron.ApiAuth;
+import ru.micron.v1.ApiAuth;
 import ru.micron.dto.AuthRequestDto;
 import ru.micron.model.User;
 import ru.micron.security.jwt.JwtTokenProvider;

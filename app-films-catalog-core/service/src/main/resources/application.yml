@@ -5,6 +5,7 @@ spring:
   main:
     banner-mode: off
     allow-bean-definition-overriding: true
+    #web-application-type: none
 
   datasource:
     url: jdbc:postgresql://${postgres.host}/${postgres.dbname}?currentSchema=${postgres.schema}
@@ -63,3 +64,12 @@ springfox:
     swagger:
       v2:
         path: /v1/api-docs
+
+app:
+  feign:
+    url:
+      films: 'http://app-films-catalog-core:8081'
+      actors: 'http://app-films-catalog-core:8081'
+      auth: 'http://app-films-catalog-core:8081'
+      admin: 'http://app-films-catalog-core:8081'
+      user: 'http://app-films-catalog-core:8081'

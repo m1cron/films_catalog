@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
-import ru.micron.ApiActors;
+import ru.micron.v1.ApiActors;
 import ru.micron.dto.ActorDto;
 import ru.micron.mapper.ActorMapper;
 import ru.micron.service.ActorService;

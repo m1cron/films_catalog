@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler
+  public ResponseEntity<FilmIncorrectData> handleException(JwtAuthenticationException exception) {
+    FilmIncorrectData data = new FilmIncorrectData();
+    data.setInfo(exception.getMessage());
+    return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
+  }
+
+
+  @ExceptionHandler
   public ResponseEntity<FilmIncorrectData> handleException(NoSuchEntityException exception) {
     FilmIncorrectData data = new FilmIncorrectData();
     data.setInfo(exception.getMessage());
