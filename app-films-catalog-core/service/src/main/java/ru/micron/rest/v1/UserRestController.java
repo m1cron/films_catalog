@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.micron.ApiUser;
+import ru.micron.v1.ApiUser;
 import ru.micron.dto.UserDto;
 import ru.micron.exception.NoSuchEntityException;
 import ru.micron.mapper.UserMapper;

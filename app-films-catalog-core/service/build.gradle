@@ -33,7 +33,6 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-undertow"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$ver.openFeign"
 
     // Swagger
@@ -61,6 +60,9 @@ dependencies {
     implementation "org.mapstruct:mapstruct:$ver.mapstruct"
     annotationProcessor "org.mapstruct:mapstruct-processor:$ver.mapstruct"
 
+    // Servlet
+    compileOnly "javax.servlet:javax.servlet-api:4.0.1"
+
     // Lombok
     compileOnly "org.projectlombok:lombok:$ver.lombok"
     annotationProcessor "org.projectlombok:lombok:$ver.lombok"
@@ -79,7 +81,6 @@ configurations.all {
     all*.exclude group: "org.apache.logging.log4j"
     all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
     all*.exclude group: "org.slf4j", module: "slf4j-simple"
-    all*.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
 }
 
 compileJava {

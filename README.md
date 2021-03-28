@@ -8,17 +8,15 @@ $ docker-compose up
 $ look at Swagger Docs
 ```
 
-Swagger API Documentation: </br>
-JSON: http://localhost:8080/v1/api-docs </br>
-HTML: http://localhost:8080/swagger-ui.html
+#### Swagger API Documentation: </br>
+JSON: https://localhost:8080/<SERVICE_NAME>/v1/api-docs </br>
+HTML: https://localhost:8080/<SERVICE_NAME>/swagger-ui.html
 
 ### Stack:
 ```
 Java 11
-API Gateway Pattern
-Spring Cloud Netflix
-Declarative REST Client: Feign
 Spring Boot 2
+Spring Cloud Netflix: Feign Clients, Zuul API Gateway
 Spring Data JPA (Hibernate)
 Spring Security
 Swagger 2.0
