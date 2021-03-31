@@ -4,6 +4,9 @@ services:
   database:
     image: postgres
     hostname: database
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
 
   core:
     build: ./app-films-catalog-core
