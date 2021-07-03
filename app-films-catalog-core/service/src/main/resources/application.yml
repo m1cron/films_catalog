@@ -71,3 +71,5 @@ app:
       auth: 'http://app-films-catalog-core:8081'
       admin: 'http://app-films-catalog-core:8081'
       user: 'http://app-films-catalog-core:8081'
+
+logging.config: classpath:logback-spring.xml
