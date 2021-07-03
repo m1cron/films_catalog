@@ -1,6 +1,6 @@
 group = 'ru.micron'
 version '1.0'
-rootProject.wrapper.gradleVersion = '6.5'
+rootProject.wrapper.gradleVersion = '7.1.1'
 
 buildscript {
 

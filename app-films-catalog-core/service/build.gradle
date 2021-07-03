@@ -53,7 +53,7 @@ dependencies {
     implementation 'org.liquibase:liquibase-core'
 
     // JWT
-    compile "io.jsonwebtoken:jjwt:$ver.jjwt"
+    implementation "io.jsonwebtoken:jjwt:$ver.jjwt"
 
     // Mapstruct
     implementation "org.mapstruct:mapstruct:$ver.mapstruct"
