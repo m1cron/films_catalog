@@ -1,4 +1,4 @@
-group 'ru.micron'
+group = 'ru.micron'
 version '1.0'
 rootProject.wrapper.gradleVersion = '6.5'
 
@@ -13,7 +13,6 @@ buildscript {
                 dependencyManagement    : '1.0.11.RELEASE',
                 openapi                 : '5.0.0-beta2'
         ]
-
     }
 
     repositories {
@@ -42,20 +41,9 @@ subprojects {
 
     targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
 
-    compileJava {
-        options.encoding = 'UTF-8'
-        options.compilerArgs = ['-parameters', '-Xlint:unchecked']
-    }
-
-    compileTestJava {
-        options.encoding = 'UTF-8'
-        options.compilerArgs = ['-parameters', '-Xlint:unchecked']
-    }
-
     test {
         useJUnitPlatform()
     }
-
 }
 
 allprojects {

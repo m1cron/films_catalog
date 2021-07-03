@@ -1,4 +1,4 @@
-group 'ru.micron'
+group = 'ru.micron'
 version '1.0'
 rootProject.wrapper.gradleVersion = '6.5'
 
@@ -25,7 +25,6 @@ buildscript {
                 "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot",
                 "org.openapitools:openapi-generator-gradle-plugin:$ver.openapi"
     }
-
 }
 
 subprojects {
@@ -42,20 +41,9 @@ subprojects {
 
     targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
 
-    compileJava {
-        options.encoding = 'UTF-8'
-        options.compilerArgs = ['-parameters', '-Xlint:unchecked']
-    }
-
-    compileTestJava {
-        options.encoding = 'UTF-8'
-        options.compilerArgs = ['-parameters', '-Xlint:unchecked']
-    }
-
     test {
         useJUnitPlatform()
     }
-
 }
 
 allprojects {
