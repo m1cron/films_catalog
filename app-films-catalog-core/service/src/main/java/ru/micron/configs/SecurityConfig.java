@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,22 +24,22 @@ import ru.micron.security.jwt.JwtTokenProvider;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter implements Ordered {
 
   private final JwtTokenProvider jwtTokenProvider;
 
   private static final String ADMIN_ENDPOINT = BASE_URL + "/**";
   private static final String[] AUTH_WHITELIST = {
-
-      // -- login and logout
       LOGIN,
       LOG_OUT,
-
-      // -- swagger ui
+      "/docs/**",
+      "/configuration/ui",
+      "/configuration/security",
       "/swagger-resources/**",
       "/swagger-ui.html",
-      "/v1/api-docs",
-      "/webjars/**"
+      "/v2/api-docs",
+      "/webjars/**",
+      "/actuator/**"
   };
 
   @Override
@@ -67,4 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
+  @Override
+  public int getOrder() {
+    return Ordered.HIGHEST_PRECEDENCE;
+  }
 }
