@@ -12,7 +12,6 @@ application {
 ext {
     ver = [
             swagger2                : '2.9.2',
-            swaggerUi               : '2.9.2',
             swaggerAnnotations      : '2.1.1',
             lombok                  : '1.18.12',
             jjwt                    : '0.9.1',
@@ -37,7 +36,7 @@ dependencies {
 
     // Swagger
     implementation "io.springfox:springfox-swagger2:$ver.swagger2"
-    implementation "io.springfox:springfox-swagger-ui:$ver.swaggerUi"
+    implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
     implementation "io.swagger.core.v3:swagger-annotations:$ver.swaggerAnnotations"
 
     // Validation

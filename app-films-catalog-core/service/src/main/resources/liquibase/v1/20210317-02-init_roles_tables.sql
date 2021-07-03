@@ -1,4 +1,4 @@
-CREATE TABLE "${schema}".roles (
+CREATE TABLE roles (
     "id" BIGSERIAL,
     "name" VARCHAR(20) UNIQUE NOT NULL,
     "status" VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,
@@ -7,10 +7,10 @@ CREATE TABLE "${schema}".roles (
     UNIQUE ("name"),
     PRIMARY KEY ("id")
 );
-INSERT INTO "${schema}".roles (id, name)
+INSERT INTO roles (id, name)
 VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN'), (3, 'ROLE_ACTOR'), (4, 'ROLE_PRODUCER');
 
-CREATE TABLE "${schema}".user_roles (
+CREATE TABLE user_roles (
     "user_id" BIGINT NOT NULL,
     "role_id" BIGINT NOT NULL,
     PRIMARY KEY ("user_id", "role_id"),
@@ -18,7 +18,7 @@ CREATE TABLE "${schema}".user_roles (
     FOREIGN KEY ("role_id") REFERENCES roles("id")
 );
 
-CREATE TABLE "${schema}".actors_roles (
+CREATE TABLE actors_roles (
     "actor_id" BIGINT NOT NULL,
     "role_id" BIGINT NOT NULL,
     PRIMARY KEY ("actor_id", "role_id"),

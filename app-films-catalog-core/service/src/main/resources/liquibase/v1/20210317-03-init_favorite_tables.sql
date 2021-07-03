@@ -1,4 +1,4 @@
-CREATE TABLE "${schema}".actors_films (
+CREATE TABLE actors_films (
     "actor_id" BIGINT NOT NULL,
     "film_id" BIGINT NOT NULL,
     PRIMARY KEY ("actor_id", "film_id"),
@@ -6,7 +6,7 @@ CREATE TABLE "${schema}".actors_films (
     FOREIGN KEY ("film_id") REFERENCES films("id")
 );
 
-CREATE TABLE "${schema}".user_fav_films (
+CREATE TABLE user_fav_films (
     "user_id" BIGINT NOT NULL,
     "film_id" BIGINT NOT NULL,
     PRIMARY KEY ("user_id", "film_id"),

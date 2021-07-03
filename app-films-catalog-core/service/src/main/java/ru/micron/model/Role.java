@@ -10,8 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "roles")
+@Entity(name = "roles")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

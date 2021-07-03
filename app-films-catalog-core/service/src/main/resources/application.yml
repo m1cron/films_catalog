@@ -1,7 +1,13 @@
+postgres:
+  host: 'database:5432'
+  schema: 'public'
+  dbname: 'postgres'
+  user: 'postgres'
+  password: 'root'
+
 spring:
   application:
     name: app-films-catalog-core
-    port: 8081
   main:
     banner-mode: off
     allow-bean-definition-overriding: true
@@ -29,13 +35,9 @@ spring:
           fetch_size: 100
         use_lazy_proxy_factory: true
         enable_lazy_load_no_trans: true
-
   liquibase:
     enabled: true
     change-log: 'classpath:liquibase/changelog-master.yml'
-    parameters:
-      schema: ${postgres.schema}
-      user: ${postgres.user}
 
 feign:
   client:
@@ -52,18 +54,14 @@ server:
       force-response: true
       charset: UTF-8
 
+management:
+  server:
+    port: 8090
+
 jwt:
   header: Authorization
   secret: film
   expiration: 604800
-
-springfox:
-  documentation:
-    swaggerUi:
-      baseUrl: /api
-    swagger:
-      v2:
-        path: /v1/api-docs
 
 app:
   feign:

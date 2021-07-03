@@ -11,8 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "actors")
+@Entity(name = "actors")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-CREATE TABLE "${schema}".films (
+CREATE TABLE films (
     "id" BIGSERIAL,
     "title" VARCHAR(100) NOT NULL,
     "year" INTEGER,
@@ -11,7 +11,7 @@ CREATE TABLE "${schema}".films (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE "${schema}".users (
+CREATE TABLE users (
     "id" BIGSERIAL,
     "username" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255),
@@ -25,7 +25,7 @@ CREATE TABLE "${schema}".users (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE "${schema}".actors (
+CREATE TABLE actors (
     "id" BIGSERIAL,
     "first_name" VARCHAR(50),
     "last_name" VARCHAR(100),

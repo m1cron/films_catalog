@@ -1,7 +1,14 @@
+url:
+  zuul:
+    auth: 'http://core:8081/'
+    admin: 'http://core:8081/'
+    users: 'http://core:8081/'
+    films: 'http://core:8081/'
+    actors: 'http://core:8081/'
+
 spring:
   application:
     name: app-films-catalog-gateway
-    port: 8080
   main:
     banner-mode: off
     allow-bean-definition-overriding: true
@@ -13,29 +20,27 @@ server:
       force-response: true
       charset: UTF-8
 
-springfox:
-  documentation:
-    swaggerUi:
-      baseUrl: /api
-    swagger:
-      v2:
-        path: /v1/api-docs
-
 zuul:
-  sensitive-headers: Cookie,Set-Cookie
   routes:
-    auth:
+    app-films-catalog-auth:
       path: /auth/**
-      url: ${url.zuul.proxy.auth}
-    admin:
+      url: ${url.zuul.auth}
+      sensitive-headers:
+    app-films-catalog-admin:
       path: /admin/**
-      url: ${url.zuul.proxy.admin}
-    users:
+      url: ${url.zuul.admin}
+      sensitive-headers:
+    app-films-catalog-users:
       path: /users/**
-      url: ${url.zuul.proxy.users}
-    films:
+      url: ${url.zuul.users}
+      sensitive-headers:
+    app-films-catalog-films:
       path: /films/**
-      url: ${url.zuul.proxy.films}
-    actors:
+      url: ${url.zuul.films}
+      sensitive-headers:
+    app-films-catalog-actors:
       path: /actors/**
-      url: ${url.zuul.proxy.actors}
+      url: ${url.zuul.actors}
+      sensitive-headers:
+
+logging.config: classpath:logback-spring.xml

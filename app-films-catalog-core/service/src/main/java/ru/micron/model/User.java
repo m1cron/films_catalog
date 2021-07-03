@@ -12,8 +12,7 @@ import java.util.List;
 import lombok.experimental.Accessors;
 
 @Data
-@Entity
-@Table(name = "users")
+@Entity(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
