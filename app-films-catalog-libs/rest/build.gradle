@@ -1,0 +1,59 @@
+archivesBaseName = rootProject.name
+group = parent.group
+version = parent.version
+
+apply plugin: 'org.springframework.boot'
+
+ext {
+    ver = [
+            swagger2                : '2.9.2',
+            swaggerAnnotations      : '2.1.1',
+            lombok                  : '1.18.12',
+            logback                 : '1.2.3',
+            logstashLogbackEncoder  : '6.2',
+            openFeign               : '2.2.3.RELEASE',
+            validationApi           : '2.0.1.Final',
+            javaxServlet            : '4.0.1',
+            hibernateCore           : '5.4.18.Final',
+            openApi                 : '1.5.3'
+    ]
+}
+
+dependencies {
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$ver.openFeign"
+
+    // Swagger
+    implementation "io.springfox:springfox-swagger2:$ver.swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
+    implementation "io.swagger.core.v3:swagger-annotations:$ver.swaggerAnnotations"
+
+    // Logback
+    implementation "ch.qos.logback:logback-classic:$ver.logback"
+    implementation "net.logstash.logback:logstash-logback-encoder:$ver.logstashLogbackEncoder"
+
+    // Servlet
+    compileOnly "javax.servlet:javax.servlet-api:$ver.javaxServlet"
+
+    implementation "javax.validation:validation-api:$ver.validationApi"
+    implementation "org.hibernate:hibernate-core:$ver.hibernateCore"
+
+    //Open API
+    implementation "org.springdoc:springdoc-openapi-webmvc-core:$ver.openApi"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$ver.lombok"
+    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+
+    // Test
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+configurations.all {
+    all*.exclude group: "commons-logging", module: "commons-logging"
+    all*.exclude group: "log4j"
+    all*.exclude group: "org.apache.logging.log4j"
+    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    all*.exclude group: "org.slf4j", module: "slf4j-simple"
+}

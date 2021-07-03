@@ -1,20 +1,15 @@
-package ru.micron.configs;
+package ru.micron.libs.configs;
 
 import static net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cloud.netflix.zuul.filters.Route;
-import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -24,34 +19,17 @@ import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.SwaggerResource;
-import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Primary
 @Configuration
 @EnableSwagger2
 @RequiredArgsConstructor
-public class SwaggerConfig implements SwaggerResourcesProvider {
+public class SwaggerConfig {
 
   public static final String BASE_PACKAGE = "ru.micron";
 
-  private static final String API_DOCS_V2 = "/v2/api-docs";
-
-  private final RouteLocator routeLocator;
-
   @Value("${spring.application.name}")
   private String appName;
-
-  @Override
-  public List<SwaggerResource> get() {
-    List<SwaggerResource> resources = new ArrayList<>();
-    resources.add(swaggerResource(new Route(appName, EMPTY, EMPTY, EMPTY, false, null)));
-    resources.addAll(routeLocator.getRoutes().stream()
-        .map(this::swaggerResource)
-        .collect(Collectors.toList()));
-    return resources;
-  }
 
   @Bean
   @ConditionalOnMissingBean(Docket.class)
@@ -80,13 +58,5 @@ public class SwaggerConfig implements SwaggerResourcesProvider {
 
   private ApiKey apiKey() {
     return new ApiKey("Token", AUTHORIZATION, "header");
-  }
-
-  private SwaggerResource swaggerResource(Route route) {
-    var swaggerResource = new SwaggerResource();
-    swaggerResource.setName(route.getId());
-    swaggerResource.setLocation(route.getPrefix().concat(API_DOCS_V2));
-    swaggerResource.setSwaggerVersion("2.0");
-    return swaggerResource;
   }
 }

@@ -9,7 +9,7 @@ buildscript {
         servicePackageSlashes = servicePackage.replace('.', '/')
 
         ver = [
-                springBoot              : '2.3.2.RELEASE',
+                springBoot              : '2.3.3.RELEASE',
                 dependencyManagement    : '1.0.11.RELEASE',
                 openapi                 : '5.0.0-beta2'
         ]
