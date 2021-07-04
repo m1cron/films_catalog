@@ -25,7 +25,8 @@ buildscript {
                 openApi                 : '1.5.3',
                 jjwt                    : '0.9.1',
                 mapstruct               : '1.4.2.Final',
-                hvalidator              : '6.0.2.Final'
+                hvalidator              : '6.0.2.Final',
+                h2                      : '1.4.200'
         ]
     }
 
@@ -44,7 +45,7 @@ buildscript {
 defaultTasks 'clean', 'build'
 
 subprojects {
-    
+
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
 
@@ -57,6 +58,8 @@ subprojects {
     targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
 
     test {
+        systemProperty 'spring.profiles.active', 'test'
+
         useJUnitPlatform()
     }
 }

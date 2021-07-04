@@ -57,6 +57,7 @@ dependencies {
 
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "com.h2database:h2:$ver.h2"
 }
 
 configurations.all {
