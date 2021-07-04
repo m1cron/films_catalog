@@ -1,0 +1,65 @@
+group = 'ru.micron'
+version = '1.0'
+rootProject.wrapper.gradleVersion = '7.1.1'
+
+buildscript {
+
+    ext {
+        servicePackage = group
+        servicePackageSlashes = servicePackage.replace('.', '/')
+        ver = [
+                springBoot              : '2.3.3.RELEASE',
+                dependencyManagement    : '1.0.11.RELEASE',
+                openapi                 : '5.0.0-beta2',
+                lombok                  : '1.18.12',
+                springWeb               : '5.2.8.RELEASE',
+                validationApi           : '2.0.1.Final',
+                jakartaApi              : '4.0.4',
+                openFeign               : '2.2.3.RELEASE',
+                swagger2                : '2.9.2',
+                swaggerAnnotations      : '2.1.1',
+                logback                 : '1.2.3',
+                logstashLogbackEncoder  : '6.2',
+                javaxServlet            : '4.0.1',
+                hibernateCore           : '5.4.18.Final',
+                openApi                 : '1.5.3',
+                jjwt                    : '0.9.1',
+                mapstruct               : '1.4.2.Final',
+                hvalidator              : '6.0.2.Final'
+        ]
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:$ver.dependencyManagement",
+                "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot",
+                "org.openapitools:openapi-generator-gradle-plugin:$ver.openapi",
+                "ru.micron:version-plugin:1.0"
+    }
+
+}
+
+subprojects {
+    
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR8'
+        }
+    }
+
+    targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+allprojects {
+    repositories.addAll(rootProject.buildscript.repositories)
+}
