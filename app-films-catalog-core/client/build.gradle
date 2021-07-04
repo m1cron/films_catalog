@@ -1,16 +1,6 @@
 archivesBaseName = rootProject.name + '-client'
 group = parent.group
-
-ext {
-    ver = [
-            lombok                  : '1.18.12',
-            springWeb               : '5.3.3',
-            validationApi           : '2.0.1.Final',
-            jakartaApi              : '4.0.4',
-            springBoot              : '2.3.3.RELEASE',
-            openFeign               : '2.2.3.RELEASE'
-    ]
-}
+version = parent.version
 
 dependencies {
     // Spring
@@ -27,7 +17,4 @@ dependencies {
     // Lombok
     compileOnly "org.projectlombok:lombok:$ver.lombok"
     annotationProcessor "org.projectlombok:lombok:$ver.lombok"
-
-    testCompileOnly "org.projectlombok:lombok:$ver.lombok"
-    testAnnotationProcessor "org.projectlombok:lombok:$ver.lombok"
 }

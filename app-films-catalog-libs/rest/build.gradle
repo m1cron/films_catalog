@@ -4,21 +4,6 @@ version = parent.version
 
 apply plugin: 'org.springframework.boot'
 
-ext {
-    ver = [
-            swagger2                : '2.9.2',
-            swaggerAnnotations      : '2.1.1',
-            lombok                  : '1.18.12',
-            logback                 : '1.2.3',
-            logstashLogbackEncoder  : '6.2',
-            openFeign               : '2.2.3.RELEASE',
-            validationApi           : '2.0.1.Final',
-            javaxServlet            : '4.0.1',
-            hibernateCore           : '5.4.18.Final',
-            openApi                 : '1.5.3'
-    ]
-}
-
 dependencies {
     // Spring
     implementation "org.springframework.boot:spring-boot-starter-web"

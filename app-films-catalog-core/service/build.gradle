@@ -5,24 +5,8 @@ version = parent.version
 apply plugin: 'org.springframework.boot'
 apply plugin: 'application'
 
-application {
-    mainClassName = "${servicePackage}.Application"
-}
+mainClassName = "${project.servicePackage}.Application"
 
-ext {
-    ver = [
-            swagger2                : '2.9.2',
-            swaggerAnnotations      : '2.1.1',
-            lombok                  : '1.18.12',
-            jjwt                    : '0.9.1',
-            mapstruct               : '1.4.2.Final',
-            logback                 : '1.2.3',
-            logstashLogbackEncoder  : '6.2',
-            validationApi           : '2.0.1.Final',
-            hvalidator              : '6.0.2.Final',
-            openFeign               : '2.2.3.RELEASE'
-    ]
-}
 
 dependencies {
     // Modules
@@ -39,6 +23,7 @@ dependencies {
     implementation "io.springfox:springfox-swagger2:$ver.swagger2"
     implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
     implementation "io.swagger.core.v3:swagger-annotations:$ver.swaggerAnnotations"
+
 
     // Validation
     implementation "org.hibernate.validator:hibernate-validator:$ver.hvalidator"
@@ -66,10 +51,6 @@ dependencies {
     // Lombok
     compileOnly "org.projectlombok:lombok:$ver.lombok"
     annotationProcessor "org.projectlombok:lombok:$ver.lombok"
-
-    // Lombok Test
-    testCompileOnly "org.projectlombok:lombok:$ver.lombok"
-    testAnnotationProcessor "org.projectlombok:lombok:$ver.lombok"
 
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
