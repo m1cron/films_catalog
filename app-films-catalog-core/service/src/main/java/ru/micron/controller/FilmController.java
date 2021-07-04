@@ -6,7 +6,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.micron.v1.ApiFilm;
 import ru.micron.dto.FilmDto;
-import ru.micron.exception.NoSuchEntityException;
 import ru.micron.mapper.FilmMapper;
 import ru.micron.model.Film;
 import ru.micron.service.FilmService;
@@ -36,7 +35,7 @@ public class FilmController implements ApiFilm {
   ) {
     Film film = filmService.findById(id);
     if (film == null) {
-      throw new NoSuchEntityException(
+      throw new RuntimeException(
           String.format("There is no film with ID = %d in Database", id));
     }
     return filmMapper.toDto(film);
@@ -67,7 +66,7 @@ public class FilmController implements ApiFilm {
   ) {
     Film film = filmService.findById(id);
     if (film == null) {
-      throw new NoSuchEntityException(
+      throw new RuntimeException(
           String.format("There is no film with ID = %d in Database", id));
     }
     filmService.deleteById(id);

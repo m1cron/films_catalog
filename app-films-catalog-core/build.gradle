@@ -12,7 +12,7 @@ buildscript {
                 dependencyManagement    : '1.0.11.RELEASE',
                 openapi                 : '5.0.0-beta2',
                 lombok                  : '1.18.12',
-                springWeb               : '5.3.3',
+                springWeb               : '5.2.8.RELEASE',
                 validationApi           : '2.0.1.Final',
                 jakartaApi              : '4.0.4',
                 openFeign               : '2.2.3.RELEASE',
@@ -36,14 +36,16 @@ buildscript {
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:$ver.dependencyManagement",
                 "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot",
-                "org.openapitools:openapi-generator-gradle-plugin:$ver.openapi"
+                "org.openapitools:openapi-generator-gradle-plugin:$ver.openapi",
+                "ru.micron:version-plugin:1.0"
     }
 }
+
+defaultTasks 'clean', 'build'
 
 subprojects {
     
     apply plugin: 'java'
-    apply plugin: 'maven-publish'
     apply plugin: 'io.spring.dependency-management'
 
     dependencyManagement {

@@ -1,11 +1,11 @@
 package ru.micron.configs;
 
+import static ru.micron.libs.controller.InfoController.INFO_CONTROLLER_URL;
 import static ru.micron.paths.ApiPathAdmin.BASE_URL;
 import static ru.micron.paths.ApiPathAuth.LOGIN;
 import static ru.micron.paths.ApiPathAuth.LOG_OUT;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -26,8 +26,6 @@ import ru.micron.security.jwt.JwtTokenProvider;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements Ordered {
 
-  private final JwtTokenProvider jwtTokenProvider;
-
   private static final String ADMIN_ENDPOINT = BASE_URL + "/**";
   private static final String[] AUTH_WHITELIST = {
       LOGIN,
@@ -39,8 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Orde
       "/swagger-ui.html",
       "/v2/api-docs",
       "/webjars/**",
-      "/actuator/**"
+      "/actuator/**",
+      INFO_CONTROLLER_URL
   };
+
+  private final JwtTokenProvider jwtTokenProvider;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {

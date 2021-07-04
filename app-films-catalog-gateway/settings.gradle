@@ -1,3 +1,5 @@
 rootProject.name = 'app-films-catalog-gateway'
 
+includeBuild("../version-plugin")
+
 include 'service'

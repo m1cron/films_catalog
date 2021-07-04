@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.micron.v1.ApiAdmin;
 import ru.micron.dto.UserDto;
-import ru.micron.exception.NoSuchEntityException;
 import ru.micron.mapper.UserMapper;
 import ru.micron.model.User;
 import ru.micron.service.UserService;
@@ -54,7 +53,7 @@ public class AdminController implements ApiAdmin {
   ) {
     User user = userService.findById(id);
     if (user == null) {
-      throw new NoSuchEntityException(
+      throw new RuntimeException(
           String.format("There is no user with ID = %d in Database", id));
     }
     userService.deleteById(id);

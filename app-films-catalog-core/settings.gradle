@@ -1,4 +1,8 @@
 rootProject.name = 'app-films-catalog-core'
 
+includeBuild("../app-films-catalog-libs")
+includeBuild("../version-plugin")
+
+
 include 'service'
 include 'client'

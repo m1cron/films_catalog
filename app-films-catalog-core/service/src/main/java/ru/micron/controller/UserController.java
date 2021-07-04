@@ -4,13 +4,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.micron.libs.exception.NoSuchEntityException;
 import ru.micron.v1.ApiUser;
 import ru.micron.dto.UserDto;
 import ru.micron.mapper.UserMapper;
 import ru.micron.model.User;
 import ru.micron.service.UserService;
-
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +32,7 @@ public class UserController implements ApiUser {
   public UserDto getUserById(@PathVariable @Min(1) long id) {
     User user = userService.findById(id);
     if (user == null) {
-      throw new NoSuchEntityException(
+      throw new RuntimeException(
           String.format("There is no user with ID = %d in Database", id));
     }
     return userMapper.toDto(user);
@@ -57,7 +55,7 @@ public class UserController implements ApiUser {
   public String deleteUser(@PathVariable @Min(1) long id) {
     User user = userService.findById(id);
     if (user == null) {
-      throw new NoSuchEntityException(
+      throw new RuntimeException(
           String.format("There is no user with ID = %d in Database", id));
     }
     userService.deleteById(id);

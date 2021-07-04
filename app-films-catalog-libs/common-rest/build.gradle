@@ -2,11 +2,9 @@ archivesBaseName = rootProject.name
 group = parent.group
 version = parent.version
 
-apply plugin: 'org.springframework.boot'
-
 dependencies {
     // Spring
-    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework:spring-web:$ver.springWeb"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$ver.openFeign"
 
     // Swagger
@@ -30,9 +28,6 @@ dependencies {
     // Lombok
     compileOnly "org.projectlombok:lombok:$ver.lombok"
     annotationProcessor "org.projectlombok:lombok:$ver.lombok"
-
-    // Test
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 configurations.all {

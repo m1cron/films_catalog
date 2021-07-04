@@ -7,10 +7,15 @@ apply plugin: 'application'
 
 mainClassName = "${project.servicePackage}.Application"
 
+apply plugin: 'ru.micron.version-plugin'
+
+versionPlugin {
+    projectName = rootProject.name
+}
 
 dependencies {
     // Libs
-    implementation "ru.micron:rest:1.0"
+    implementation "ru.micron:common-rest:1.0"
 
     // Spring
     implementation "org.springframework.boot:spring-boot-starter-web"
