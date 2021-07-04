@@ -1,0 +1,20 @@
+archivesBaseName = rootProject.name + '-client'
+group = parent.group
+version = parent.version
+
+dependencies {
+    // Spring
+    implementation "org.springframework:spring-web:$ver.springWeb"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:$ver.springBoot"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$ver.openFeign"
+
+    // Servlet API
+    compileOnly "jakarta.servlet:jakarta.servlet-api:$ver.jakartaApi"
+
+    // Validation
+    implementation "javax.validation:validation-api:$ver.validationApi"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$ver.lombok"
+    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+}

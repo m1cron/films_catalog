@@ -1,0 +1,69 @@
+archivesBaseName = rootProject.name
+group = parent.group
+version = parent.version
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+
+apply plugin: 'ru.micron.version-plugin'
+
+versionPlugin {
+    projectName = rootProject.name
+}
+
+dependencies {
+    // Modules
+    implementation project(":client")
+    implementation "ru.micron:common-rest:1.0"
+
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$ver.openFeign"
+
+    // Swagger
+    implementation "io.springfox:springfox-swagger2:$ver.swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
+    implementation "io.swagger.core.v3:swagger-annotations:$ver.swaggerAnnotations"
+
+
+    // Validation
+    implementation "org.hibernate.validator:hibernate-validator:$ver.hvalidator"
+    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$ver.hvalidator"
+    implementation "javax.validation:validation-api:$ver.validationApi"
+
+    // Logback
+    implementation "ch.qos.logback:logback-classic:$ver.logback"
+    implementation "net.logstash.logback:logstash-logback-encoder:$ver.logstashLogbackEncoder"
+
+    // Database
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
+
+    // JWT
+    implementation "io.jsonwebtoken:jjwt:$ver.jjwt"
+
+    // Mapstruct
+    implementation "org.mapstruct:mapstruct:$ver.mapstruct"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$ver.mapstruct"
+
+    // Servlet
+    compileOnly "javax.servlet:javax.servlet-api:4.0.1"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$ver.lombok"
+    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+
+    // Test
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "com.h2database:h2:$ver.h2"
+}
+
+configurations.all {
+    all*.exclude group: "commons-logging", module: "commons-logging"
+    all*.exclude group: "log4j"
+    all*.exclude group: "org.apache.logging.log4j"
+    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    all*.exclude group: "org.slf4j", module: "slf4j-simple"
+}

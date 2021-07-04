@@ -1,0 +1,7 @@
+url:
+  zuul:
+    auth: 'http://localhost:8081/'
+    admin: 'http://localhost:8081/'
+    users: 'http://localhost:8081/'
+    films: 'http://localhost:8081/'
+    actors: 'http://localhost:8081/'

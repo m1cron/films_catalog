@@ -5,12 +5,10 @@
 $ git clone https://github.com/m1cron/films_catalog
 $ cd films_catalog
 $ docker-compose up
-$ look at Swagger Docs
 ```
 
 #### Swagger API Documentation: </br>
-JSON: https://localhost:8080/<SERVICE_NAME>/v1/api-docs </br>
-HTML: https://localhost:8080/<SERVICE_NAME>/swagger-ui.html
+https://localhost:8080/swagger-ui.html
 
 ### Stack:
 ```
@@ -23,8 +21,8 @@ Swagger 2.0
 PostgreSQL
 Liquibase
 Containerization with Docker Compose
-Gradle
-Logback or Log4j2
+Gradle 7.1.1
+Logback
 ```
 
 ![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/1.png)

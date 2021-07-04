@@ -1,4 +1,0 @@
-rootProject.name = 'app-films-catalog-core'
-
-include 'service'
-include 'client'

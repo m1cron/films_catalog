@@ -1,8 +1,0 @@
-url:
-  zuul:
-    proxy:
-      auth: 'http://core:8081/'
-      admin: 'http://core:8081/'
-      users: 'http://core:8081/'
-      films: 'http://core:8081/'
-      actors: 'http://core:8081/'
