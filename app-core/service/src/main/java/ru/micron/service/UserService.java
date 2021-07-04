@@ -3,7 +3,6 @@ package ru.micron.service;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.micron.dto.UserDto;
@@ -15,7 +14,6 @@ import ru.micron.model.User;
 import ru.micron.repository.RoleRepository;
 import ru.micron.repository.UserRepository;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -35,31 +33,26 @@ public class UserService {
     user.setStatus(Status.ACTIVE);
 
     User registerUser = userRepository.save(user);
-    log.info("IN register - user : {} successfully registered", registerUser);
     return userMapper.toDto(registerUser);
   }
 
   public List<User> findAll() {
-    List<User> result = userRepository.findAll();
-    log.info("IN getAll - {} user found", result.size());
-    return result;
+    return userRepository.findAll();
   }
 
   public User findByUsername(String username) {
     User result = userRepository.findUserByUsername(username);
     if (result == null) {
-      log.warn("IN findByUsername - no user found by username: {}", username);
+      throw new RuntimeException("no user found by username: " + username);
     }
-    log.info("IN findByUsername - user found by username: {}", username);
     return result;
   }
 
   public User findById(Long id) {
     User result = userRepository.findById(id).orElse(null);
     if (result == null) {
-      log.warn("IN findById - no user found by id: {}", id);
+      throw new RuntimeException("no user found by id: " + id);
     }
-    log.info("IN findById - user found by id: {}", id);
     return result;
   }
 
@@ -78,6 +71,5 @@ public class UserService {
 
   public void deleteById(Long id) {
     userRepository.deleteById(id);
-    log.info("IN deleteById - user with id: {} successfully deleted", id);
   }
 }
