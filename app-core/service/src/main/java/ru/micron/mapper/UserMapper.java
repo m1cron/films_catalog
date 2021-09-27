@@ -14,10 +14,7 @@ public abstract class UserMapper {
 
   public static final UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-  @Mapping(target = "favorite_films", source = "favoriteFilms")
   public abstract UserDto toDto(User user);
 
-  @Mapping(target = "favoriteFilms", source = "favorite_films")
   public abstract User toEntity(UserDto userDTO);
-
 }

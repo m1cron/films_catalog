@@ -1,6 +1,9 @@
 version: "3.9"
 
 services:
+  libs:
+    build: ./app-libs
+
   database:
     image: postgres
     hostname: database

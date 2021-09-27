@@ -8,7 +8,7 @@ buildscript {
                 springBoot              : '2.3.3.RELEASE',
                 dependencyManagement    : '1.0.11.RELEASE',
                 openapi                 : '5.0.0-beta2',
-                lombok                  : '1.18.12',
+                lombok                  : '1.18.20',
                 springWeb               : '5.2.8.RELEASE',
                 validationApi           : '2.0.1.Final',
                 jakartaApi              : '4.0.4',

@@ -2,22 +2,10 @@
 <configuration scan="true" scanPeriod="30 seconds">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS dd-MM-yyyy} [%thread] %-5level %logger{35}.%M - %msg%n"/>
     <property name="LOG_PATH" value="./logs"/>
-
-    <appender name="app" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${LOG_PATTERN}</pattern>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/log-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-            <maxFileSize>5MB</maxFileSize>
-        </rollingPolicy>
-    </appender>
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="app"/>
     </root>
 
 </configuration>
