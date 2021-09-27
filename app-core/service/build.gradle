@@ -5,12 +5,6 @@ version = parent.version
 apply plugin: 'org.springframework.boot'
 apply plugin: 'application'
 
-apply plugin: 'ru.micron.version-plugin'
-
-versionPlugin {
-    projectName = rootProject.name
-}
-
 dependencies {
     // Modules
     implementation project(":client")
@@ -58,12 +52,4 @@ dependencies {
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "com.h2database:h2:$ver.h2"
-}
-
-configurations.all {
-    all*.exclude group: "commons-logging", module: "commons-logging"
-    all*.exclude group: "log4j"
-    all*.exclude group: "org.apache.logging.log4j"
-    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
-    all*.exclude group: "org.slf4j", module: "slf4j-simple"
 }

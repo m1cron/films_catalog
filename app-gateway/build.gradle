@@ -3,10 +3,7 @@ version = '1.0'
 rootProject.wrapper.gradleVersion = '7.1.1'
 
 buildscript {
-
     ext {
-        servicePackage = group
-        servicePackageSlashes = servicePackage.replace('.', '/')
         ver = [
                 springBoot              : '2.3.3.RELEASE',
                 dependencyManagement    : '1.0.11.RELEASE',
@@ -35,9 +32,7 @@ buildscript {
 
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:$ver.dependencyManagement",
-                "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot",
-                "org.openapitools:openapi-generator-gradle-plugin:$ver.openapi",
-                "ru.micron:version-plugin:1.0"
+                "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot"
     }
 
 }

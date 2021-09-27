@@ -1,5 +1,3 @@
 rootProject.name = 'app-gateway'
 
-includeBuild("../version-plugin")
-
 include 'service'

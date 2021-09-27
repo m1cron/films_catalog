@@ -67,10 +67,10 @@ jwt:
 app:
   feign:
     url:
-      films: 'http://app-films-catalog-core:8081'
-      actors: 'http://app-films-catalog-core:8081'
-      auth: 'http://app-films-catalog-core:8081'
-      admin: 'http://app-films-catalog-core:8081'
-      user: 'http://app-films-catalog-core:8081'
+      films: 'http://core:8081'
+      actors: 'http://core:8081'
+      auth: 'http://core:8081'
+      admin: 'http://core:8081'
+      user: 'http://core:8081'
 
 logging.config: classpath:logback-spring.xml

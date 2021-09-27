@@ -1,7 +1,6 @@
 rootProject.name = 'app-core'
 
 includeBuild("../app-libs")
-includeBuild("../version-plugin")
 
 include 'service'
 include 'client'
