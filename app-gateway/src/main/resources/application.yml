@@ -43,5 +43,3 @@ zuul:
       path: /actors/**
       url: ${url.zuul.actors}
       sensitive-headers:
-
-logging.config: classpath:logback-spring.xml

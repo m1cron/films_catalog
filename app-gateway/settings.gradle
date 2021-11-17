@@ -1,5 +1,1 @@
 rootProject.name = 'app-gateway'
-
-includeBuild("../app-libs")
-
-include 'service'

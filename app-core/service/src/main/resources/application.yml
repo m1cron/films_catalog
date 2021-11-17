@@ -7,7 +7,7 @@ postgres:
 
 spring:
   application:
-    name: app-films-catalog-core
+    name: core
   main:
     banner-mode: off
     allow-bean-definition-overriding: true

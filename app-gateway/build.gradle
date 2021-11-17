@@ -1,60 +1,56 @@
-group = 'ru.micron'
-version = '1.0'
-rootProject.wrapper.gradleVersion = '7.1.1'
-
 buildscript {
     ext {
         ver = [
-                springBoot              : '2.3.3.RELEASE',
-                dependencyManagement    : '1.0.11.RELEASE',
-                openapi                 : '5.0.0-beta2',
                 lombok                  : '1.18.20',
-                springWeb               : '5.2.8.RELEASE',
-                validationApi           : '2.0.1.Final',
-                jakartaApi              : '4.0.4',
-                openFeign               : '2.2.3.RELEASE',
                 swagger2                : '2.9.2',
-                swaggerAnnotations      : '2.1.1',
-                logback                 : '1.2.3',
-                logstashLogbackEncoder  : '6.2',
-                javaxServlet            : '4.0.1',
-                hibernateCore           : '5.4.18.Final',
-                openApi                 : '1.5.3',
-                jjwt                    : '0.9.1',
-                mapstruct               : '1.4.2.Final',
-                hvalidator              : '6.0.2.Final'
+
+                zuul                    : '2.2.9.RELEASE',
+                springCloudVersion      : '2020.0.4'
         ]
     }
 
     repositories {
         mavenCentral()
-    }
-
-    dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:$ver.dependencyManagement",
-                "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot"
-    }
-
-}
-
-subprojects {
-    
-    apply plugin: 'java'
-    apply plugin: 'io.spring.dependency-management'
-
-    dependencyManagement {
-        imports {
-            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR8'
-        }
-    }
-
-    targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
-
-    test {
-        useJUnitPlatform()
+        mavenLocal()
     }
 }
 
-allprojects {
-    repositories.addAll(rootProject.buildscript.repositories)
+plugins {
+    id 'org.springframework.boot' version '2.4.12'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'ru.micron'
+version = '1.0'
+rootProject.wrapper.gradleVersion = '7.2'
+targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
+repositories.addAll(rootProject.buildscript.repositories)
+defaultTasks 'clean', 'build'
+
+dependencies {
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-zuul:$ver.zuul"
+
+    // Swagger
+    implementation "io.springfox:springfox-swagger2:$ver.swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$ver.lombok"
+    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+
+    // Test
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$ver.springCloudVersion"
+    }
+}
+
+test {
+    useJUnitPlatform()
 }
