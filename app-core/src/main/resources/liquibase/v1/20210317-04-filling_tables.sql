@@ -5,10 +5,10 @@ VALUES ('Inception', 2010, 'sci-fi', true),
        ('Gunfight at the O.K. Corral', 1957, 'western', false),
        ('Die Hard', 1988, 'action', true);
 
-INSERT INTO "user" (username, password, first_name, last_name, email)
-VALUES ('user', '$2y$12$2fBeXbxyuaCk8KWNkwA7nee/E4HQQNMc1qnP2Hi93oy2xDWrxJtAa', 'Billy', 'Long',
+INSERT INTO users (username, password, first_name, last_name, email)
+VALUES ('user', '$2a$12$S3z/n280S/wrmzaeYYL8Eub5FbT.MEokuxfwWmxIDV96FLIGdTav2', 'Billy', 'Long',
         'billy2long1@email.com'),
-       ('admin', '$2y$12$lF9vTEu4wDd3L0oPIJyPbeO/9mCr69.CkNHDHmGLR0J7XBjCPimFa', 'Harvie', 'Hull',
+       ('admin', '$2a$12$m/7.uBZnv.sW1Vvj6klJyO5AT3mIysVPbZRTZAoR4C.BFNQVqNEIu', 'Harvie', 'Hull',
         'harv1ehu11@email.com');
 
 INSERT INTO "actor" (first_name, last_name)

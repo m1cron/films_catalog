@@ -5,14 +5,11 @@ CREATE TABLE "film"
     "year"    INTEGER,
     "genre"   VARCHAR(20),
     "watched" BOOLEAN               DEFAULT FALSE NOT NULL,
-    "status"  VARCHAR(10)           DEFAULT 'ACTIVE' NOT NULL,
-    "created" TIMESTAMP    NOT NULL DEFAULT now(),
-    "updated" TIMESTAMP    NOT NULL DEFAULT now(),
     UNIQUE ("title"),
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE "user"
+CREATE TABLE users
 (
     "id"         BIGSERIAL,
     "username"   VARCHAR(255)                 NOT NULL,

@@ -1,12 +1,10 @@
 buildscript {
     ext {
         ver = [
-                lombok                  : '1.18.20',
+                lombok                  : '1.18.22',
                 validationApi           : '2.0.1.Final',
                 swagger2                : '2.9.2',
                 swaggerAnnotations      : '2.1.1',
-                logback                 : '1.2.3',
-                logstashLogbackEncoder  : '6.2',
                 javaxServlet            : '4.0.1',
                 jjwt                    : '0.9.1',
                 mapstruct               : '1.4.2.Final',
@@ -29,7 +27,6 @@ plugins {
 
 group = 'ru.micron'
 version = '1.0'
-rootProject.wrapper.gradleVersion = '7.2'
 repositories.addAll(rootProject.buildscript.repositories)
 targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
 defaultTasks 'clean', 'build'
@@ -63,10 +60,6 @@ dependencies {
 
     // Servlet
     compileOnly "javax.servlet:javax.servlet-api:4.0.1"
-
-    // Logback
-    implementation "ch.qos.logback:logback-classic:$ver.logback"
-    implementation "net.logstash.logback:logstash-logback-encoder:$ver.logstashLogbackEncoder"
 
     // Lombok
     compileOnly "org.projectlombok:lombok:$ver.lombok"

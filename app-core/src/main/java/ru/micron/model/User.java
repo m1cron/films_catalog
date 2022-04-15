@@ -1,13 +1,18 @@
 package ru.micron.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -20,6 +25,8 @@ import lombok.ToString;
 import lombok.ToString.Exclude;
 import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
 @Getter
 @Setter
@@ -28,8 +35,12 @@ import org.hibernate.Hibernate;
 @AllArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "user")
-public class User extends BaseEntity {
+@Table(name = "users")
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @Column(name = "email")
   private String email;
@@ -46,7 +57,18 @@ public class User extends BaseEntity {
   @Column(name = "last_name")
   private String lastName;
 
-  @JsonManagedReference
+  @CreatedDate
+  @Column(name = "created")
+  private LocalDateTime created = LocalDateTime.now();
+
+  @LastModifiedBy
+  @Column(name = "updated")
+  private LocalDateTime updated = LocalDateTime.now();
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "status", nullable = false, columnDefinition = "ACTIVE")
+  private Status status;
+
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(
       name = "user_role",

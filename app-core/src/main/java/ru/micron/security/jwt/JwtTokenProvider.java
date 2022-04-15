@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import liquibase.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,8 +67,11 @@ public class JwtTokenProvider {
   }
 
   public String resolveToken(HttpServletRequest request) {
-    return request.getHeader(authorizationHeader)
-        .replace("Bearer ", "");
+    var token = request.getHeader(authorizationHeader);
+    if (StringUtils.isNotEmpty(token)) {
+      token = token.replace("Bearer ", "");
+    }
+    return token;
   }
 
   public boolean validateToken(String token) {

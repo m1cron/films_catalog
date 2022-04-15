@@ -3,7 +3,7 @@ package ru.micron.service;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.micron.dto.UserDto;
 import ru.micron.mapper.UserMapper;
@@ -20,7 +20,7 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
-  private final PasswordEncoder passwordEncoder;
+  private final BCryptPasswordEncoder passwordEncoder;
   private final UserMapper userMapper;
 
   public UserDto register(User user) {
@@ -43,7 +43,7 @@ public class UserService {
   public User findByUsername(String username) {
     User result = userRepository.findUserByUsername(username);
     if (result == null) {
-      throw new RuntimeException("no user found by username: " + username);
+      throw new RuntimeException("No user found by username: " + username);
     }
     return result;
   }

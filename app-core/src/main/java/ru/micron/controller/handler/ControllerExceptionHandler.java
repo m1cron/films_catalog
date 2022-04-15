@@ -33,16 +33,16 @@ public class ControllerExceptionHandler {
   private static final DateTimeFormatter DEFAULT_ERROR_TIME_PATTERN =
       DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private static final String DEFAULT_ERROR_START_MESSAGE =
-      "Извините, произошла непредвиденная ошибка.\n\n";
+      "Извините, произошла непредвиденная ошибка. ";
   private static final String DEFAULT_ERROR_END_MESSAGE =
       "Пожалуйста, отправьте этот текст в техническую поддержку.";
   private static final String DEFAULT_ERROR_MESSAGE_PATTERN =
       DEFAULT_ERROR_START_MESSAGE
-          + "В %s в сервисе %s причина : %s\n"
+          + "В %s в сервисе %s причина : %s "
           + DEFAULT_ERROR_END_MESSAGE;
   private static final String DATABASE_ERROR_MESSAGE_PATTERN =
       DEFAULT_ERROR_START_MESSAGE
-          + "В %s в сервисе %s в базе данных причина : %s\n"
+          + "В %s в сервисе %s в базе данных причина : %s "
           + DEFAULT_ERROR_END_MESSAGE;
 
   @Value("${spring.application.name}")
