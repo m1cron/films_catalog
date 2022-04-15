@@ -21,6 +21,10 @@ server:
       force-response: true
       charset: UTF-8
 
+management:
+  server:
+    port: { server.port }
+
 zuul:
   routes:
     app-films-catalog-auth:

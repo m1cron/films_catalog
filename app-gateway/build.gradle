@@ -31,6 +31,7 @@ dependencies {
     // Spring
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-zuul:$ver.zuul"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Swagger
     implementation "io.springfox:springfox-swagger2:$ver.swagger2"

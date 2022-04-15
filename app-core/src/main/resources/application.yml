@@ -12,7 +12,6 @@ spring:
     banner-mode: off
     allow-bean-definition-overriding: true
   mandatory-file-encoding: UTF-8
-
   datasource:
     url: jdbc:postgresql://${postgres.host}/${postgres.dbname}?currentSchema=${postgres.schema}
     username: ${postgres.user}
@@ -48,7 +47,7 @@ server:
 
 management:
   server:
-    port: 8090
+    port: { server.port }
 
 jwt:
   header: Authorization
