@@ -1,17 +1,13 @@
-package ru.micron.model;
+package ru.micron.persistence.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.ToString.Exclude;
+import lombok.experimental.Accessors;
 import org.hibernate.Hibernate;
 
 @Getter
@@ -26,32 +24,21 @@ import org.hibernate.Hibernate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 @Entity
-@Table(name = "film")
-public class Film {
+@Table(name = "roles")
+public class Role {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "title", nullable = false)
-  private String title;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-  @Column(name = "year")
-  private Integer year;
-
-  @Column(name = "genre")
-  private String genre;
-
-  @Column(name = "watched")
-  private Boolean watched;
-
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "actor_film",
-      joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
-  private List<Actor> actors = new ArrayList<>();
+  @ManyToMany(mappedBy = "roles")
+  @Exclude
+  private List<User> users = new ArrayList<>();
 
   @Override
   public boolean equals(Object o) {
@@ -61,8 +48,8 @@ public class Film {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
       return false;
     }
-    Film film = (Film) o;
-    return getId() != null && Objects.equals(getId(), film.getId());
+    Role role = (Role) o;
+    return getId() != null && Objects.equals(getId(), role.getId());
   }
 
   @Override

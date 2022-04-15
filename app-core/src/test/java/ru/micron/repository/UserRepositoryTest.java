@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.micron.model.Role;
-import ru.micron.model.Roles;
-import ru.micron.model.User;
+import ru.micron.persistence.model.Role;
+import ru.micron.persistence.model.Roles;
+import ru.micron.persistence.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import ru.micron.persistence.repository.UserRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

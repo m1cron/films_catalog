@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.micron.model.Actor;
-import ru.micron.repository.ActorRepository;
+import ru.micron.persistence.model.Actor;
+import ru.micron.persistence.repository.ActorRepository;
 
 @Service
 @RequiredArgsConstructor

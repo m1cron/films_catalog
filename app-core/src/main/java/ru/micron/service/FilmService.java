@@ -2,8 +2,8 @@ package ru.micron.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.micron.model.Film;
-import ru.micron.repository.FilmRepository;
+import ru.micron.persistence.model.Film;
+import ru.micron.persistence.repository.FilmRepository;
 
 import java.util.List;
 

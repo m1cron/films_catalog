@@ -1,4 +1,4 @@
-package ru.micron.model;
+package ru.micron.persistence.model;
 
 public enum Status {
   ACTIVE,

@@ -1,9 +1,5 @@
 package ru.micron.config;
 
-import static ru.micron.paths.ApiPathAdmin.BASE_URL;
-import static ru.micron.paths.ApiPathAuth.LOGIN;
-import static ru.micron.paths.ApiPathAuth.LOG_OUT;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.micron.model.Roles;
+import ru.micron.persistence.model.Roles;
 import ru.micron.security.jwt.JwtConfigurer;
 import ru.micron.security.jwt.JwtTokenProvider;
 
@@ -24,11 +20,10 @@ import ru.micron.security.jwt.JwtTokenProvider;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements Ordered {
-
-  private static final String ADMIN_ENDPOINT = BASE_URL + "/**";
   private static final String[] AUTH_WHITELIST = {
-      LOGIN,
-      LOG_OUT,
+      "/api/v1/auth/login",
+      "/api/v1/auth/logout",
+
       "/docs/**",
       "/configuration/ui",
       "/configuration/security",
@@ -51,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Orde
         .and()
         .authorizeRequests()
         .antMatchers(AUTH_WHITELIST).permitAll()
-        .antMatchers(ADMIN_ENDPOINT).hasRole(Roles.ADMIN.name())
+        .antMatchers("/api/v1/admin/**").hasRole(Roles.ADMIN.name())
         .anyRequest().authenticated()
         .and()
         .apply(new JwtConfigurer(jwtTokenProvider));

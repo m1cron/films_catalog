@@ -2,9 +2,9 @@ package ru.micron.security.jwt;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import ru.micron.model.Role;
-import ru.micron.model.Status;
-import ru.micron.model.User;
+import ru.micron.persistence.model.Role;
+import ru.micron.persistence.model.Status;
+import ru.micron.persistence.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

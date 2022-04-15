@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.micron.model.Actor;
-import ru.micron.model.Film;
+import ru.micron.persistence.model.Actor;
+import ru.micron.persistence.model.Film;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import ru.micron.persistence.repository.FilmRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

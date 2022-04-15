@@ -1,6 +1,6 @@
-package ru.micron.repository;
+package ru.micron.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.micron.model.Actor;
+import ru.micron.persistence.model.Actor;
 
 public interface ActorRepository extends JpaRepository<Actor, Long> {}

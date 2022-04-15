@@ -3,7 +3,7 @@ package ru.micron.mapper;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import ru.micron.model.Role;
+import ru.micron.persistence.model.Role;
 
 @Mapper(componentModel = "spring")
 public abstract class RoleMapper {

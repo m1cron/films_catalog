@@ -7,12 +7,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.micron.dto.UserDto;
 import ru.micron.mapper.UserMapper;
-import ru.micron.model.Role;
-import ru.micron.model.Roles;
-import ru.micron.model.Status;
-import ru.micron.model.User;
-import ru.micron.repository.RoleRepository;
-import ru.micron.repository.UserRepository;
+import ru.micron.persistence.model.Role;
+import ru.micron.persistence.model.Roles;
+import ru.micron.persistence.model.Status;
+import ru.micron.persistence.model.User;
+import ru.micron.persistence.repository.RoleRepository;
+import ru.micron.persistence.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

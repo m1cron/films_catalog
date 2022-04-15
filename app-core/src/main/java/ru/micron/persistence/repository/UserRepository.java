@@ -1,7 +1,7 @@
-package ru.micron.repository;
+package ru.micron.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.micron.model.User;
+import ru.micron.persistence.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
   User findUserByUsername(String username);

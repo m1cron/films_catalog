@@ -1,43 +1,44 @@
-package ru.micron.controller;
+package ru.micron.rest;
 
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import ru.micron.controller.v1.ApiFilm;
-import ru.micron.dto.FilmDto;
-import ru.micron.mapper.FilmMapper;
-import ru.micron.model.Film;
-import ru.micron.service.FilmService;
-
-import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.Min;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.micron.dto.FilmDto;
+import ru.micron.mapper.FilmMapper;
+import ru.micron.persistence.model.Film;
+import ru.micron.service.FilmService;
 
-@Slf4j
 @Validated
 @RestController
+@RequestMapping("/api/v1/films")
 @RequiredArgsConstructor
-public class FilmController implements ApiFilm {
+public class FilmController {
 
   private final FilmService filmService;
   private final FilmMapper filmMapper;
 
   @ApiOperation("Get all films")
-  @Override
+  @GetMapping
   public List<FilmDto> getFilms() {
     var res =
         filmService.findAll();
-    log.info(res.toString());
     return res.stream().map(filmMapper::toDto).collect(Collectors.toList());
   }
 
   @ApiOperation("Get films by ID")
-  @Override
-  public FilmDto getFilmById(
-      @Min(1) long id
-  ) {
+  @GetMapping("/{id}")
+  public FilmDto getFilmById(@PathVariable @Min(1) long id) {
     Film film = filmService.findById(id);
     if (film == null) {
       throw new RuntimeException(
@@ -47,28 +48,22 @@ public class FilmController implements ApiFilm {
   }
 
   @ApiOperation("Add film")
-  @Override
-  public FilmDto addFilm(
-      FilmDto film
-  ) {
+  @PostMapping
+  public FilmDto addFilm(@RequestBody FilmDto film) {
     filmService.save(filmMapper.toEntity(film));
     return film;
   }
 
   @ApiOperation("Edit film")
-  @Override
-  public FilmDto editFilm(
-      FilmDto film
-  ) {
+  @PutMapping
+  public FilmDto editFilm(@RequestBody FilmDto film) {
     filmService.save(filmMapper.toEntity(film));
     return film;
   }
 
   @ApiOperation("Delete film")
-  @Override
-  public String deleteFilm(
-      @Min(1) long id
-  ) {
+  @DeleteMapping("/{id}")
+  public String deleteFilm(@PathVariable @Min(1) long id) {
     Film film = filmService.findById(id);
     if (film == null) {
       throw new RuntimeException(

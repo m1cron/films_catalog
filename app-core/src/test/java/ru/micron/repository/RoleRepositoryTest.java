@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.micron.model.Role;
-import ru.micron.model.Roles;
+import ru.micron.persistence.model.Role;
+import ru.micron.persistence.model.Roles;
+import ru.micron.persistence.repository.RoleRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

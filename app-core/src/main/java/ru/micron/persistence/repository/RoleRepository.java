@@ -1,7 +1,7 @@
-package ru.micron.repository;
+package ru.micron.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.micron.model.Role;
+import ru.micron.persistence.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
   Role findByName(String name);

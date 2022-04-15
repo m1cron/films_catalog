@@ -3,7 +3,7 @@ package ru.micron.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.micron.dto.FilmDto;
-import ru.micron.model.Film;
+import ru.micron.persistence.model.Film;
 
 @Mapper(componentModel = "spring", uses = RoleMapper.class)
 public abstract class FilmMapper {

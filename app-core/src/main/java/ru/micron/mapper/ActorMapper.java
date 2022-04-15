@@ -3,7 +3,7 @@ package ru.micron.mapper;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import ru.micron.dto.ActorDto;
-import ru.micron.model.Actor;
+import ru.micron.persistence.model.Actor;
 
 @Mapper(componentModel = "spring", uses = RoleMapper.class)
 public abstract class ActorMapper {

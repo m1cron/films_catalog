@@ -1,4 +1,4 @@
-package ru.micron.controller.handler;
+package ru.micron.rest.handler;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLException;
