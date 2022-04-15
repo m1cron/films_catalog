@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class FilmDto {
+  private Long id;
   private String title;
   private Integer year;
   private String genre;

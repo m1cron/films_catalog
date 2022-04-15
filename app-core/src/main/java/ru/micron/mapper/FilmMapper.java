@@ -13,5 +13,4 @@ public abstract class FilmMapper {
   public abstract FilmDto toDto(Film film);
 
   public abstract Film toEntity(FilmDto filmDTO);
-
 }
