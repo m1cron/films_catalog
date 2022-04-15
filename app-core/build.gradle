@@ -1,35 +1,30 @@
-buildscript {
-    ext {
-        ver = [
-                lombok                  : '1.18.22',
-                validationApi           : '2.0.1.Final',
-                swagger2                : '2.9.2',
-                swaggerAnnotations      : '2.1.1',
-                javaxServlet            : '4.0.1',
-                jjwt                    : '0.9.1',
-                mapstruct               : '1.4.2.Final',
-                hvalidator              : '6.0.2.Final',
-                h2                      : '1.4.200',
-        ]
-    }
-
-    repositories {
-        mavenCentral()
-        mavenLocal()
-    }
-}
-
 plugins {
     id 'org.springframework.boot' version '2.4.12'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
+ext {
+    lombok                  = '1.18.22'
+    validationApi           = '2.0.1.Final'
+    swagger2                = '2.9.2'
+    swaggerAnnotations      = '2.1.1'
+    javaxServlet            = '4.0.1'
+    jjwt                    = '0.9.1'
+    mapstruct               = '1.4.2.Final'
+    hvalidator              = '6.0.2.Final'
+    h2                      = '1.4.200'
+}
+
 group = 'ru.micron'
 version = '1.0'
-repositories.addAll(rootProject.buildscript.repositories)
-targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = sourceCompatibility = '11'
 defaultTasks 'clean', 'build'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
 
 dependencies {
     // Spring
@@ -39,36 +34,33 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Swagger
-    implementation "io.springfox:springfox-swagger2:$ver.swagger2"
-    implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
-    implementation "io.swagger.core.v3:swagger-annotations:$ver.swaggerAnnotations"
+    implementation "io.springfox:springfox-swagger2:$swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$swagger2"
+    implementation "io.swagger.core.v3:swagger-annotations:$swaggerAnnotations"
 
     // Validation
-    implementation "org.hibernate.validator:hibernate-validator:$ver.hvalidator"
-    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$ver.hvalidator"
-    implementation "javax.validation:validation-api:$ver.validationApi"
+    implementation "org.hibernate.validator:hibernate-validator:$hvalidator"
+    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$hvalidator"
+    implementation "javax.validation:validation-api:$validationApi"
 
     // Database
     implementation 'org.postgresql:postgresql'
     implementation 'org.liquibase:liquibase-core'
 
     // JWT
-    implementation "io.jsonwebtoken:jjwt:$ver.jjwt"
+    implementation "io.jsonwebtoken:jjwt:$jjwt"
 
     // Mapstruct
-    implementation "org.mapstruct:mapstruct:$ver.mapstruct"
-    annotationProcessor "org.mapstruct:mapstruct-processor:$ver.mapstruct"
-
-    // Servlet
-    compileOnly "javax.servlet:javax.servlet-api:4.0.1"
+    implementation "org.mapstruct:mapstruct:$mapstruct"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct"
 
     // Lombok
-    compileOnly "org.projectlombok:lombok:$ver.lombok"
-    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+    compileOnly "org.projectlombok:lombok:$lombok"
+    annotationProcessor "org.projectlombok:lombok:$lombok"
 
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "com.h2database:h2:$ver.h2"
+    testImplementation "com.h2database:h2:$h2"
 }
 
 test {

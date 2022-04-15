@@ -40,6 +40,10 @@ public class Role {
   @Exclude
   private List<User> users = new ArrayList<>();
 
+  public Role(String name) {
+    this.name = name;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

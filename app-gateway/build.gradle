@@ -1,20 +1,3 @@
-buildscript {
-    ext {
-        ver = [
-                lombok                  : '1.18.20',
-                swagger2                : '2.9.2',
-
-                zuul                    : '2.2.9.RELEASE',
-                springCloudVersion      : '2020.0.4'
-        ]
-    }
-
-    repositories {
-        mavenCentral()
-        mavenLocal()
-    }
-}
-
 plugins {
     id 'org.springframework.boot' version '2.4.12'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -23,23 +6,34 @@ plugins {
 
 group = 'ru.micron'
 version = '1.0'
-targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
-repositories.addAll(rootProject.buildscript.repositories)
+targetCompatibility = sourceCompatibility = '11'
 defaultTasks 'clean', 'build'
+
+ext {
+    lombok                  = '1.18.20'
+    swagger2                = '2.9.2'
+    zuul                    = '2.2.9.RELEASE'
+    springCloudVersion      = '2020.0.4'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
 
 dependencies {
     // Spring
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.cloud:spring-cloud-starter-netflix-zuul:$ver.zuul"
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-zuul:$zuul"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Swagger
-    implementation "io.springfox:springfox-swagger2:$ver.swagger2"
-    implementation "io.springfox:springfox-swagger-ui:$ver.swagger2"
+    implementation "io.springfox:springfox-swagger2:$swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$swagger2"
 
     // Lombok
-    compileOnly "org.projectlombok:lombok:$ver.lombok"
-    annotationProcessor "org.projectlombok:lombok:$ver.lombok"
+    compileOnly "org.projectlombok:lombok:$lombok"
+    annotationProcessor "org.projectlombok:lombok:$lombok"
 
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
@@ -47,7 +41,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$ver.springCloudVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
     }
 }
 
