@@ -3,7 +3,7 @@ postgres:
   schema: 'public'
   dbname: 'postgres'
   user: 'postgres'
-  password: 'root'
+  password: 'postgres'
 
 spring:
   application:

@@ -9,7 +9,9 @@ services:
     hostname: database
     restart: always
     environment:
-      POSTGRES_PASSWORD: root
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
 
   core:
     build: ./app-core
@@ -17,11 +19,11 @@ services:
     links:
       - database
     ports:
-      - 8081:8081
+      - "8081:8081"
 
   gateway:
     build: ./app-gateway
     links:
       - core
     ports:
-      - 8080:8080
+      - "8080:8080"

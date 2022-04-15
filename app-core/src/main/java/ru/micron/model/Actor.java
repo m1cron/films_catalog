@@ -1,21 +1,31 @@
 package ru.micron.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.ToString.Exclude;
+import org.hibernate.Hibernate;
 
-@Entity(name = "actors")
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "actor")
 public class Actor extends BaseEntity implements Comparable<Actor> {
 
   @Column(name = "first_name")
@@ -24,16 +34,15 @@ public class Actor extends BaseEntity implements Comparable<Actor> {
   @Column(name = "last_name")
   private String lastName;
 
-  @JsonManagedReference
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(
-      name = "actors_roles",
+      name = "actor_role",
       joinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private List<Role> roles = new ArrayList<>();
 
-  @JsonIgnoreProperties("actors")
   @ManyToMany(mappedBy = "actors")
+  @Exclude
   private List<Film> films = new ArrayList<>();
 
   @Override
@@ -41,4 +50,20 @@ public class Actor extends BaseEntity implements Comparable<Actor> {
     return o.getFilms().size() - this.getFilms().size();
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    Actor actor = (Actor) o;
+    return getId() != null && Objects.equals(getId(), actor.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
 }
