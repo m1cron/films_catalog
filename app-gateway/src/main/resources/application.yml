@@ -1,0 +1,49 @@
+url:
+  zuul:
+    auth: 'http://core:8081/'
+    admin: 'http://core:8081/'
+    users: 'http://core:8081/'
+    films: 'http://core:8081/'
+    actors: 'http://core:8081/'
+
+spring:
+  application:
+    name: app-films-catalog-gateway
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: true
+  mandatory-file-encoding: UTF-8
+
+server:
+  port: 8080
+  servlet:
+    encoding:
+      force-response: true
+      charset: UTF-8
+
+management:
+  server:
+    port: { server.port }
+
+zuul:
+  routes:
+    app-films-catalog-auth:
+      path: /auth/**
+      url: ${url.zuul.auth}
+      sensitive-headers:
+    app-films-catalog-admin:
+      path: /admin/**
+      url: ${url.zuul.admin}
+      sensitive-headers:
+    app-films-catalog-users:
+      path: /users/**
+      url: ${url.zuul.users}
+      sensitive-headers:
+    app-films-catalog-films:
+      path: /films/**
+      url: ${url.zuul.films}
+      sensitive-headers:
+    app-films-catalog-actors:
+      path: /actors/**
+      url: ${url.zuul.actors}
+      sensitive-headers:

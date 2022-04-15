@@ -1,0 +1,6 @@
+postgres:
+  host: 'localhost:5432'
+  schema: 'public'
+  dbname: 'postgres'
+  user: 'postgres'
+  password: 'postgres'

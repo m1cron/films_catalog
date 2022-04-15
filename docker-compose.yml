@@ -1,22 +1,29 @@
 version: "3.9"
 
 services:
+  libs:
+    build: ./app-libs
+
   database:
     image: postgres
     hostname: database
     restart: always
     environment:
-      POSTGRES_PASSWORD: root
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
 
   core:
-    build: ./app-films-catalog-core
-    hostname: app-films-catalog-core
+    build: ./app-core
+    hostname: core
     links:
       - database
+    ports:
+      - "8081:8081"
 
   gateway:
-    build: ./app-films-catalog-gateway
+    build: ./app-gateway
     links:
       - core
     ports:
-      - 8080:8080
+      - "8080:8080"

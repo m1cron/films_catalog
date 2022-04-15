@@ -1,3 +1,0 @@
-rootProject.name = 'app-libs'
-
-include 'common-rest'

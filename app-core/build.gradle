@@ -1,69 +1,68 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.12'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+ext {
+    lombok                  = '1.18.22'
+    validationApi           = '2.0.1.Final'
+    swagger2                = '2.9.2'
+    swaggerAnnotations      = '2.1.1'
+    javaxServlet            = '4.0.1'
+    jjwt                    = '0.9.1'
+    mapstruct               = '1.4.2.Final'
+    hvalidator              = '6.0.2.Final'
+    h2                      = '1.4.200'
+}
+
 group = 'ru.micron'
 version = '1.0'
-rootProject.wrapper.gradleVersion = '7.1.1'
-
-buildscript {
-
-    ext {
-        servicePackage = group
-        servicePackageSlashes = servicePackage.replace('.', '/')
-        ver = [
-                springBoot              : '2.3.3.RELEASE',
-                dependencyManagement    : '1.0.11.RELEASE',
-                openapi                 : '5.0.0-beta2',
-                lombok                  : '1.18.12',
-                springWeb               : '5.2.8.RELEASE',
-                validationApi           : '2.0.1.Final',
-                jakartaApi              : '4.0.4',
-                openFeign               : '2.2.3.RELEASE',
-                swagger2                : '2.9.2',
-                swaggerAnnotations      : '2.1.1',
-                logback                 : '1.2.3',
-                logstashLogbackEncoder  : '6.2',
-                javaxServlet            : '4.0.1',
-                hibernateCore           : '5.4.18.Final',
-                openApi                 : '1.5.3',
-                jjwt                    : '0.9.1',
-                mapstruct               : '1.4.2.Final',
-                hvalidator              : '6.0.2.Final',
-                h2                      : '1.4.200'
-        ]
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:$ver.dependencyManagement",
-                "org.springframework.boot:spring-boot-gradle-plugin:$ver.springBoot",
-                "org.openapitools:openapi-generator-gradle-plugin:$ver.openapi",
-                "ru.micron:version-plugin:1.0"
-    }
-}
-
+targetCompatibility = sourceCompatibility = '11'
 defaultTasks 'clean', 'build'
 
-subprojects {
-
-    apply plugin: 'java'
-    apply plugin: 'io.spring.dependency-management'
-
-    dependencyManagement {
-        imports {
-            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR8'
-        }
-    }
-
-    targetCompatibility = sourceCompatibility = JavaVersion.VERSION_11
-
-    test {
-        systemProperty 'spring.profiles.active', 'test'
-
-        useJUnitPlatform()
-    }
+repositories {
+    mavenCentral()
+    mavenLocal()
 }
 
-allprojects {
-    repositories.addAll(rootProject.buildscript.repositories)
+dependencies {
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Swagger
+    implementation "io.springfox:springfox-swagger2:$swagger2"
+    implementation "io.springfox:springfox-swagger-ui:$swagger2"
+    implementation "io.swagger.core.v3:swagger-annotations:$swaggerAnnotations"
+
+    // Validation
+    implementation "org.hibernate.validator:hibernate-validator:$hvalidator"
+    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$hvalidator"
+    implementation "javax.validation:validation-api:$validationApi"
+
+    // Database
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
+
+    // JWT
+    implementation "io.jsonwebtoken:jjwt:$jjwt"
+
+    // Mapstruct
+    implementation "org.mapstruct:mapstruct:$mapstruct"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$lombok"
+    annotationProcessor "org.projectlombok:lombok:$lombok"
+
+    // Test
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "com.h2database:h2:$h2"
+}
+
+test {
+    useJUnitPlatform()
 }
