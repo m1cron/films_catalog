@@ -1,3 +1,4 @@
 rootProject.name = 'films_catalog'
 
 includeBuild 'app-core'
+includeBuild 'app-gateway'
