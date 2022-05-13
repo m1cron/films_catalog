@@ -35,16 +35,14 @@ public class WarmupFilmService {
 
     filmsForReceived.forEach(
         o -> {
-          if (!o.getIsReceived()) {
-            var imdbId = o.getImdbId();
-            var receivedMovieDto = feignClient.receiveFilms(imdbId, null, null, apiKey);
-            var entity = mapper.toEntity(receivedMovieDto);
-            filmRepository.save(entity);
+          var imdbId = o.getImdbId();
+          var receivedMovieDto = feignClient.receiveFilms(imdbId, null, null, apiKey);
+          var entity = mapper.toEntity(receivedMovieDto);
+          filmRepository.save(entity);
 
-            o.setIsReceived(true);
-            warmUpRepository.save(o);
-            log.info("Film with imdbId: {} was received", imdbId);
-          }
+          o.setIsReceived(true);
+          warmUpRepository.save(o);
+          log.info("Film with imdbId: {} was received", imdbId);
         });
   }
 }
