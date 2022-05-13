@@ -1,6 +1,5 @@
 package ru.micron.rest;
 
-import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +31,6 @@ public class AuthController {
   private final JwtTokenProvider jwtTokenProvider;
   private final UserService userService;
 
-  @ApiOperation("Authenticate user")
   @PostMapping("/login")
   public ResponseEntity<?> authenticate(@RequestBody AuthRequestDto requestDTO) {
     try {
@@ -41,9 +38,6 @@ public class AuthController {
       authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(username, requestDTO.getPassword()));
       User user = userService.findByUsername(username);
-      if (user == null) {
-        throw new UsernameNotFoundException("User with username: " + username + " not found");
-      }
       String token = jwtTokenProvider.createToken(username, user.getRoles());
       Map<Object, Object> response = new HashMap<>();
       response.put("username", username);
@@ -54,7 +48,6 @@ public class AuthController {
     }
   }
 
-  @ApiOperation("Logout user")
   @PostMapping("/logout")
   public void logout(HttpServletRequest request, HttpServletResponse response) {
     SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();

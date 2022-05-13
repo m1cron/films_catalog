@@ -1,39 +1,37 @@
 package ru.micron.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.micron.dto.UserDto;
+import ru.micron.config.SecurityConfig.Role;
+import ru.micron.dto.RegisterUserDto;
 import ru.micron.mapper.UserMapper;
-import ru.micron.persistence.model.Role;
-import ru.micron.persistence.model.Roles;
+import ru.micron.persistence.model.RoleEntity;
 import ru.micron.persistence.model.Status;
 import ru.micron.persistence.model.User;
-import ru.micron.persistence.repository.RoleRepository;
 import ru.micron.persistence.repository.UserRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
   private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
   private final BCryptPasswordEncoder passwordEncoder;
   private final UserMapper userMapper;
 
-  public UserDto register(User user) {
-    Role roleUser = roleRepository.findByName(Roles.USER.name());
-    List<Role> userRoles = new ArrayList<>();
-    userRoles.add(roleUser);
+  public void register(RegisterUserDto registerUserDto) {
+    var user = userMapper.toEntity(registerUserDto);
 
+    user.setUuid(UUID.randomUUID());
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    user.setRoles(userRoles);
+    user.setRoles(List.of(new RoleEntity(Role.USER)));
     user.setStatus(Status.ACTIVE);
-
-    User registerUser = userRepository.save(user);
-    return userMapper.toDto(registerUser);
+    userRepository.save(user);
   }
 
   public List<User> findAll() {
@@ -43,12 +41,12 @@ public class UserService {
   public User findByUsername(String username) {
     User result = userRepository.findUserByUsername(username);
     if (result == null) {
-      throw new RuntimeException("No user found by username: " + username);
+      throw new UsernameNotFoundException("No user found by username: " + username);
     }
     return result;
   }
 
-  public User findById(Long id) {
+  public User findById(UUID id) {
     User result = userRepository.findById(id).orElse(null);
     if (result == null) {
       throw new RuntimeException("no user found by id: " + id);
@@ -56,20 +54,26 @@ public class UserService {
     return result;
   }
 
-  public UserDto editUserInfo(UserDto userDto) {
+  public void editUserInfo(RegisterUserDto userDto) {
     User user = userRepository.findUserByUsername(userDto.getUsername());
-    if (!userDto.getUsername().isBlank())
+    if (!userDto.getUsername().isBlank()) {
       user.setUsername(userDto.getUsername());
-    if (!userDto.getEmail().isBlank())
+    }
+    if (!userDto.getEmail().isBlank()) {
       user.setEmail(userDto.getEmail());
-    if (!userDto.getFirstName().isBlank())
+    }
+    if (!userDto.getFirstName().isBlank()) {
       user.setFirstName(userDto.getFirstName());
-    if (!userDto.getLastName().isBlank())
+    }
+    if (!userDto.getLastName().isBlank()) {
       user.setLastName(userDto.getLastName());
-    return userMapper.toDto(userRepository.save(user));
+    }
+    userRepository.save(user);
   }
 
-  public void deleteById(Long id) {
-    userRepository.deleteById(id);
+  public void deleteById(UUID id) {
+    var entity = userRepository.findById(id)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    userRepository.delete(entity);
   }
 }

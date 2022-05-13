@@ -5,13 +5,14 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.micrometer.core.instrument.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import liquibase.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import ru.micron.persistence.model.Role;
+import ru.micron.persistence.model.RoleEntity;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
@@ -43,7 +45,7 @@ public class JwtTokenProvider {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
   }
 
-  public String createToken(String username, List<Role> roles) {
+  public String createToken(String username, List<RoleEntity> roles) {
     Claims claims = Jwts.claims().setSubject(username);
     claims.put("role", getRoleNames(roles));
     Date now = new Date();
@@ -83,8 +85,8 @@ public class JwtTokenProvider {
     }
   }
 
-  private List<String> getRoleNames(List<Role> userRoles) {
-    List<String> result = new ArrayList<>();
+  private List<String> getRoleNames(List<RoleEntity> userRoles) {
+    List<String> result = new ArrayList<>(userRoles.size());
     userRoles.forEach(
         role -> {
           result.add(role.getName());

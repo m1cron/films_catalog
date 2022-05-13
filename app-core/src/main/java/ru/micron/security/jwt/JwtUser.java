@@ -1,6 +1,7 @@
 package ru.micron.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.UUID;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,26 +11,24 @@ import java.util.Date;
 
 public class JwtUser implements UserDetails {
 
-  private final Long id;
+  private final UUID id;
   private final String email;
   private final String username;
   private final String firstName;
   private final String lastName;
   private final String password;
   private final Boolean enabled;
-  private final LocalDateTime lastPasswordResetDate;
   private final Collection<? extends GrantedAuthority> authorities;
 
   public JwtUser(
-      Long id,
+      UUID id,
       String username,
       String firstName,
       String lastName,
       String email,
       String password,
       Collection<? extends GrantedAuthority> authorities,
-      boolean enabled,
-      LocalDateTime lastPasswordResetDate) {
+      boolean enabled) {
     this.id = id;
     this.username = username;
     this.firstName = firstName;
@@ -38,11 +37,10 @@ public class JwtUser implements UserDetails {
     this.password = password;
     this.authorities = authorities;
     this.enabled = enabled;
-    this.lastPasswordResetDate = lastPasswordResetDate;
   }
 
   @JsonIgnore
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
@@ -95,10 +93,5 @@ public class JwtUser implements UserDetails {
   @Override
   public boolean isEnabled() {
     return enabled;
-  }
-
-  @JsonIgnore
-  public LocalDateTime getLastPasswordResetDate() {
-    return lastPasswordResetDate;
   }
 }

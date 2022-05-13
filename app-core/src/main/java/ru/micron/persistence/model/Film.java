@@ -1,22 +1,20 @@
 package ru.micron.persistence.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
@@ -24,34 +22,98 @@ import org.hibernate.Hibernate;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "film")
 public class Film {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @Column(name = "imdb_id")
+  private String imdbID;
 
-  @Column(name = "title", nullable = false)
+  @Column(name = "title")
   private String title;
 
-  @Column(name = "year")
-  private Integer year;
+  @Column(name = "year_of_release")
+  private String year;
+
+  @Column(name = "rated")
+  private String ageRate;
+
+  @Column(name = "released")
+  private String releaseYear;
+
+  @Column(name = "runtime")
+  private String filmTime;
 
   @Column(name = "genre")
-  private String genre;
+  private String genres;
 
-  @Column(name = "watched")
-  private Boolean watched;
+  @Column(name = "director")
+  private String director;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "actor_film",
-      joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
-  private List<Actor> actors = new ArrayList<>();
+  @Column(name = "writer")
+  private String writers;
+
+  @Column(name = "actor")
+  private String actors;
+
+  @Column(name = "plot")
+  private String plot;
+
+  @Column(name = "language_of")
+  private String language;
+
+  @Column(name = "country")
+  private String country;
+
+  @Column(name = "award")
+  private String awards;
+
+  @Column(name = "poster")
+  private String posterUrl;
+
+  @Column(name = "metascore")
+  private String metascore;
+
+  @Column(name = "imdb_rating")
+  private String imdbRating;
+
+  @Column(name = "imdb_vote")
+  private String imdbVotes;
+
+  @Column(name = "type")
+  private String type;
+
+  @Column(name = "dvd")
+  private String dvd;
+
+  @Column(name = "box_office")
+  private String boxOffice;
+
+  @Column(name = "production")
+  private String production;
+
+  @Column(name = "website")
+  private String website;
+
+  @Column(name = "response")
+  private Boolean response;
+
+  @ToString.Exclude
+  @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
+  private List<FilmRating> ratings = new ArrayList<>();
+
+  @ToString.Exclude
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "favouriteFilms", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+  private Set<User> users;
+
+  public void addUserToFilm(User user) {
+    if (users == null) {
+      users = new HashSet<>();
+    }
+    users.add(user);
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -62,7 +124,7 @@ public class Film {
       return false;
     }
     Film film = (Film) o;
-    return getId() != null && Objects.equals(getId(), film.getId());
+    return imdbID != null && Objects.equals(imdbID, film.imdbID);
   }
 
   @Override

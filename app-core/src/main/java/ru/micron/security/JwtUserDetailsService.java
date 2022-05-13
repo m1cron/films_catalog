@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.micron.persistence.model.User;
 import ru.micron.security.jwt.JwtUserFactory;
 import ru.micron.service.UserService;
 
@@ -17,10 +16,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userService.findByUsername(username);
-    if (user == null) {
-      throw new UsernameNotFoundException(username + " doesn't exists");
-    }
-    return JwtUserFactory.create(user);
+    return JwtUserFactory.create(userService.findByUsername(username));
   }
 }
