@@ -23,7 +23,6 @@ create table "film"
     "box_office"      varchar(255),
     "production"      varchar(255),
     "website"         varchar(255),
-    "response"        boolean,
     unique ("imdb_id"),
     primary key ("imdb_id")
 );

@@ -61,3 +61,7 @@ feign:
   OMDbApi:
     apiKey: API_KEY
     url: "http://omdbapi.com"
+
+logging:
+  level:
+    ru.micron: debug

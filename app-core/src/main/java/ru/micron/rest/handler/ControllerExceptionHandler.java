@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -33,6 +35,9 @@ public class ControllerExceptionHandler {
       errorMes = ((DateTimeParseException) e).getParsedString() + " is not valid datetime value";
     } else if (rootCause instanceof AccessDeniedException) {
       httpStatus = HttpStatus.FORBIDDEN;
+    } else if (rootCause instanceof BadCredentialsException
+        || rootCause instanceof AuthenticationServiceException) {
+      httpStatus = HttpStatus.BAD_REQUEST;
     } else if (rootCause instanceof JsonParseException) {
       httpStatus = HttpStatus.BAD_REQUEST;
       errorMes = "HTTP request body is not a valid JSON: " + e.getMessage();
