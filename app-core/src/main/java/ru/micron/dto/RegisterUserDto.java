@@ -5,15 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class ActorDto {
-  private Long id;
+public class RegisterUserDto {
+
+  private String username;
+  private String password;
   private String firstName;
   private String lastName;
-  private List<String> roles;
+  private String email;
 }

@@ -1,21 +1,22 @@
 package ru.micron.rest;
 
-import io.swagger.annotations.ApiOperation;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.constraints.Min;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.micron.dto.UserDto;
-import ru.micron.mapper.UserMapper;
+import ru.micron.dto.BasicResponse;
+import ru.micron.dto.omdb.ApiResponseDto;
+import ru.micron.mapper.FilmMapper;
 import ru.micron.persistence.model.User;
+import ru.micron.service.FilmService;
 import ru.micron.service.UserService;
 
 @Validated
@@ -25,37 +26,40 @@ import ru.micron.service.UserService;
 public class AdminController {
 
   private final UserService userService;
-  private final UserMapper userMapper;
+  private final FilmService filmService;
+  private final FilmMapper filmMapper;
 
-  @ApiOperation("Get all users")
-  @GetMapping("/users")
-  public List<UserDto> allUsers() {
-    return userService.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
+  @GetMapping("/user")
+  public BasicResponse<List<User>> allUsers() {
+    return new BasicResponse<List<User>>().setData(userService.findAll());
   }
 
-  @ApiOperation("Get user by ID")
-  @GetMapping("/users/{id}")
-  public UserDto getUserById(@PathVariable @Min(1) long id) {
-    return userMapper.toDto(userService.findById(id));
+  @GetMapping("/user/{id}")
+  public BasicResponse<User> getUserById(@PathVariable UUID id) {
+    return new BasicResponse<User>().setData(userService.findById(id));
   }
 
-  @ApiOperation("Register user")
-  @PostMapping("/users")
-  public UserDto addUser(@RequestBody UserDto user) {
-    return userService.register(userMapper.toEntity(user));
-  }
-
-  @ApiOperation("Delete user")
-  @DeleteMapping("/users/{id}")
-  public String deleteUser(
-      @PathVariable @Min(1) long id
-  ) {
-    User user = userService.findById(id);
-    if (user == null) {
-      throw new RuntimeException(
-          String.format("There is no user with ID = %d in Database", id));
-    }
+  @DeleteMapping("/user/{id}")
+  public BasicResponse<Void> deleteUser(@PathVariable UUID id) {
     userService.deleteById(id);
-    return String.format("User with ID = %d was deleted", id);
+    return new BasicResponse<>();
+  }
+
+  @DeleteMapping("/film/{imdbId}")
+  public BasicResponse<Void> deleteFilm(@PathVariable String imdbId) {
+    filmService.deleteById(imdbId);
+    return new BasicResponse<>();
+  }
+
+  @PostMapping("/film")
+  public BasicResponse<Void> addFilm(@RequestBody ApiResponseDto film) {
+    filmService.save(filmMapper.toEntity(film));
+    return new BasicResponse<>();
+  }
+
+  @PutMapping("/film")
+  public BasicResponse<Void> editFilm(@RequestBody ApiResponseDto film) {
+    filmService.save(filmMapper.toEntity(film));
+    return new BasicResponse<>();
   }
 }

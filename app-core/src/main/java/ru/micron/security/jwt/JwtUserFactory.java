@@ -1,8 +1,12 @@
 package ru.micron.security.jwt;
 
+import java.util.Collections;
+import liquibase.util.CollectionUtil;
+import org.hibernate.mapping.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import ru.micron.persistence.model.Role;
+import org.springframework.util.CollectionUtils;
+import ru.micron.persistence.model.RoleEntity;
 import ru.micron.persistence.model.Status;
 import ru.micron.persistence.model.User;
 
@@ -14,18 +18,20 @@ public final class JwtUserFactory {
 
   public static JwtUser create(User user) {
     return new JwtUser(
-        user.getId(),
+        user.getUuid(),
         user.getUsername(),
         user.getFirstName(),
         user.getLastName(),
         user.getEmail(),
         user.getPassword(),
-        mapToGrantedAuthority(new ArrayList<>(user.getRoles())),
-        user.getStatus().equals(Status.ACTIVE),
-        user.getUpdated());
+        mapToGrantedAuthority(user.getRoles()),
+        user.getStatus().equals(Status.ACTIVE));
   }
 
-  public static List<GrantedAuthority> mapToGrantedAuthority(List<Role> userRoles) {
+  public static List<GrantedAuthority> mapToGrantedAuthority(List<RoleEntity> userRoles) {
+    if (CollectionUtils.isEmpty(userRoles)) {
+      return Collections.emptyList();
+    }
     return userRoles.stream()
         .map(role -> new SimpleGrantedAuthority(role.getName()))
         .collect(Collectors.toList());

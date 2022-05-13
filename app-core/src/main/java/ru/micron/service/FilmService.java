@@ -13,8 +13,9 @@ public class FilmService {
 
   private final FilmRepository filmRepository;
 
-  public Film findById(Long id) {
-    return filmRepository.findById(id).orElse(null);
+  public Film findById(String id) {
+    return filmRepository.findById(id).orElseThrow(() ->
+        new RuntimeException(String.format("There is no film with ID = %s in Database", id)));
   }
 
   public List<Film> findAll() {
@@ -25,7 +26,8 @@ public class FilmService {
     filmRepository.save(film);
   }
 
-  public void deleteById(Long id) {
-    filmRepository.deleteById(id);
+  public void deleteById(String id) {
+    var entity = findById(id);
+    filmRepository.delete(entity);
   }
 }

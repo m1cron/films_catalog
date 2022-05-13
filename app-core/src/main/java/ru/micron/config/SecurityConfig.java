@@ -3,7 +3,6 @@ package ru.micron.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.micron.persistence.model.Roles;
 import ru.micron.security.jwt.JwtConfigurer;
 import ru.micron.security.jwt.JwtTokenProvider;
 
@@ -19,18 +17,16 @@ import ru.micron.security.jwt.JwtTokenProvider;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements Ordered {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private static final String[] AUTH_WHITELIST = {
       "/api/v1/auth/login",
       "/api/v1/auth/logout",
+      "/api/v1/user/register",
+      "/api/v1/film/*",
 
-      "/docs/**",
-      "/configuration/ui",
-      "/configuration/security",
-      "/swagger-resources/**",
-      "/swagger-ui.html",
-      "/v2/api-docs",
-      "/v3/api-docs",
+      "/bus/v3/api-docs/**",
+      "/swagger-ui/**",
+      "/v3/api-docs/**",
       "/webjars/**",
       "/actuator/**"
   };
@@ -46,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Orde
         .and()
         .authorizeRequests()
         .antMatchers(AUTH_WHITELIST).permitAll()
-        .antMatchers("/api/v1/admin/**").hasRole(Roles.ADMIN.name())
+        .antMatchers("/api/v1/admin/**").hasRole(Role.ADMIN)
         .anyRequest().authenticated()
         .and()
         .apply(new JwtConfigurer(jwtTokenProvider));
@@ -63,8 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Orde
     return new BCryptPasswordEncoder();
   }
 
-  @Override
-  public int getOrder() {
-    return Ordered.HIGHEST_PRECEDENCE;
+  public static class Role {
+    public static final String ADMIN = "ADMIN";
+    public static final String USER = "USER";
   }
 }
