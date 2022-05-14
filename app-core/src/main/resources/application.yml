@@ -55,7 +55,7 @@ management:
 jwt:
   header: Authorization
   secret: film
-  expiration: 604800
+  expirationMills: 900000 # 15 min
 
 feign:
   OMDbApi:

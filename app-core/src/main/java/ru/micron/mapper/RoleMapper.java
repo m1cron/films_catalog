@@ -28,7 +28,7 @@ public abstract class RoleMapper {
     return roles.stream().map(this::toEntity).collect(Collectors.toList());
   }
 
-  protected List<String> mapToListOfDto(List<RoleEntity> roles) {
+  public List<String> toList(List<RoleEntity> roles) {
     if (CollectionUtils.isEmpty(roles)) {
       return Collections.emptyList();
     }

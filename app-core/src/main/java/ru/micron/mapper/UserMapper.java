@@ -13,14 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.micron.config.SecurityConfig.Role;
 import ru.micron.dto.UserDto;
 import ru.micron.persistence.model.RoleEntity;
-import ru.micron.persistence.model.Status;
 import ru.micron.persistence.model.User;
 
 @Mapper(
     componentModel = "spring",
     injectionStrategy = InjectionStrategy.FIELD,
     uses = {RoleMapper.class},
-    imports = {UUID.class, List.class, Status.class, RoleEntity.class, Role.class,
+    imports = {UUID.class, List.class, RoleEntity.class, Role.class,
         StringUtils.class, LocalDateTime.class}
 )
 public abstract class UserMapper {
@@ -41,11 +40,12 @@ public abstract class UserMapper {
   @Mapping(target = "favouriteFilms", ignore = true)
   @Mapping(target = "uuid", expression = "java(UUID.randomUUID())")
   @Mapping(target = "roles", expression = "java(List.of(roleMapper.toEntity(Role.USER)))")
-  @Mapping(target = "status", expression = "java(Status.ACTIVE)")
+  @Mapping(target = "status", expression = "java(User.Status.ACTIVE)")
   @Mapping(target = "password", expression = "java(encoder.encode(user.getPassword()))")
   public abstract User register(UserDto user);
 
   @Mapping(target = "removeFromFavourite", ignore = true)
+  @Mapping(target = "uuid", source = "before.uuid")
   @Mapping(target = "email", expression = "java(StringUtils.isNotBlank(dto.getEmail()) ? dto.getEmail() : before.getEmail())")
   @Mapping(target = "username", expression = "java(StringUtils.isNotBlank(dto.getUsername()) ? dto.getUsername() : before.getUsername())")
   @Mapping(target = "password", expression = "java(StringUtils.isNotBlank(dto.getPassword()) ? encoder.encode(dto.getPassword()) : before.getPassword())")

@@ -42,7 +42,7 @@ public class UserService {
   }
 
   public void editUserData(UserDto dto) {
-    User user = findByUsername(dto.getUsername());
+    User user = findById(dto.getUuid());
     userRepository.save(userMapper.edit(user, dto));
   }
 

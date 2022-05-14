@@ -62,6 +62,12 @@ public class User {
   @Column(name = "status", nullable = false, columnDefinition = "ACTIVE")
   private Status status;
 
+  public enum Status {
+    ACTIVE,
+    BANNED,
+    DELETED
+  }
+
   @ToString.Exclude
   @ManyToMany(fetch = FetchType.EAGER,
       cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
