@@ -47,11 +47,8 @@ public class UserService {
   }
 
   public User findById(UUID id) {
-    User result = userRepository.findById(id).orElse(null);
-    if (result == null) {
-      throw new RuntimeException("no user found by id: " + id);
-    }
-    return result;
+    return userRepository.findById(id)
+        .orElseThrow(() -> new UsernameNotFoundException("No user found by id: " + id));
   }
 
   public void editUserInfo(RegisterUserDto userDto) {
@@ -73,7 +70,7 @@ public class UserService {
 
   public void deleteById(UUID id) {
     var entity = userRepository.findById(id)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        .orElseThrow(() -> new UsernameNotFoundException("No user found by id: " + id));
     userRepository.delete(entity);
   }
 }
