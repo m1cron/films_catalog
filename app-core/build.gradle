@@ -6,11 +6,9 @@ plugins {
 
 ext {
     lombok                  = '1.18.22'
-    validationApi           = '2.0.1.Final'
     openApi                 = '1.6.8'
     jjwt                    = '0.9.1'
     mapstruct               = '1.4.2.Final'
-    hvalidator              = '6.0.2.Final'
 }
 
 group = 'ru.micron'
@@ -40,14 +38,10 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // Swagger
     implementation "org.springdoc:springdoc-openapi-ui:$openApi"
-
-    // Validation
-    implementation "org.hibernate.validator:hibernate-validator:$hvalidator"
-    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$hvalidator"
-    implementation "javax.validation:validation-api:$validationApi"
 
     // Database
     implementation 'org.postgresql:postgresql'

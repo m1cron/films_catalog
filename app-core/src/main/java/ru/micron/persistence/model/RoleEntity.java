@@ -7,6 +7,8 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -30,8 +32,14 @@ public class RoleEntity {
   @Id
   private UUID id;
 
+  @Enumerated(EnumType.STRING)
   @Column(name = "name", nullable = false)
-  private String name;
+  private ERole name;
+
+  public enum ERole {
+    ROLE_ADMIN,
+    ROLE_USER
+  }
 
   @JsonBackReference
   @ToString.Exclude

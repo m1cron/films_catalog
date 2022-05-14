@@ -2,7 +2,7 @@ package ru.micron.mapper;
 
 import io.micrometer.core.instrument.util.StringUtils;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.micron.config.SecurityConfig.Role;
 import ru.micron.dto.UserDto;
 import ru.micron.persistence.model.RoleEntity;
 import ru.micron.persistence.model.User;
@@ -19,7 +18,7 @@ import ru.micron.persistence.model.User;
     componentModel = "spring",
     injectionStrategy = InjectionStrategy.FIELD,
     uses = {RoleMapper.class},
-    imports = {UUID.class, List.class, RoleEntity.class, Role.class,
+    imports = {UUID.class, Set.class, RoleEntity.class,
         StringUtils.class, LocalDateTime.class}
 )
 public abstract class UserMapper {
@@ -39,7 +38,7 @@ public abstract class UserMapper {
   @Mapping(target = "removeFromFavourite", ignore = true)
   @Mapping(target = "favouriteFilms", ignore = true)
   @Mapping(target = "uuid", expression = "java(UUID.randomUUID())")
-  @Mapping(target = "roles", expression = "java(List.of(roleMapper.toEntity(Role.USER)))")
+  @Mapping(target = "roles", expression = "java(Set.of(roleMapper.toEntity(RoleEntity.ERole.ROLE_USER)))")
   @Mapping(target = "status", expression = "java(User.Status.ACTIVE)")
   @Mapping(target = "password", expression = "java(encoder.encode(user.getPassword()))")
   public abstract User register(UserDto user);

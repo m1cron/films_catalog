@@ -1,16 +1,17 @@
-package ru.micron.security.jwt;
+package ru.micron.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @AllArgsConstructor
-public class JwtUserDetails implements UserDetails {
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
+  private final UUID uuid;
   private final String username;
   private final String password;
   private final boolean isEnabled;

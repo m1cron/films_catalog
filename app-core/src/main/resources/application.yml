@@ -54,7 +54,7 @@ management:
 
 jwt:
   header: Authorization
-  secret: film
+  secret: ZmlsbQ==
   expirationMills: 900000 # 15 min
 
 feign:

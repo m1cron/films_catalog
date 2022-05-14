@@ -1,8 +1,7 @@
-package ru.micron.security.jwt;
+package ru.micron.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.micron.mapper.JwtUserMapper;
@@ -10,7 +9,8 @@ import ru.micron.service.UserService;
 
 @Service
 @RequiredArgsConstructor
-public class JwtUserDetailsService implements UserDetailsService {
+public class UserDetailsService implements
+    org.springframework.security.core.userdetails.UserDetailsService {
 
   private final UserService userService;
   private final JwtUserMapper jwtUserMapper;

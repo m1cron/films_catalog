@@ -16,22 +16,15 @@ public abstract class RoleMapper {
 
   public static final RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
 
-  @Mapping(target = "id", expression = "java(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)))")
+  @Mapping(target = "id", expression = "java(UUID.nameUUIDFromBytes(name.name().getBytes(StandardCharsets.UTF_8)))")
   @Mapping(target = "name", source = "name")
   @Mapping(target = "users", ignore = true)
-  protected abstract RoleEntity toEntity(String name);
-
-  protected List<RoleEntity> toListOfEntities(List<String> roles) {
-    if (CollectionUtils.isEmpty(roles)) {
-      return Collections.emptyList();
-    }
-    return roles.stream().map(this::toEntity).collect(Collectors.toList());
-  }
+  protected abstract RoleEntity toEntity(RoleEntity.ERole name);
 
   public List<String> toList(List<RoleEntity> roles) {
     if (CollectionUtils.isEmpty(roles)) {
       return Collections.emptyList();
     }
-    return roles.stream().map(RoleEntity::getName).collect(Collectors.toList());
+    return roles.stream().map(o -> o.getName().name()).collect(Collectors.toList());
   }
 }

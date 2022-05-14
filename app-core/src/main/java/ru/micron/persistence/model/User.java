@@ -75,12 +75,9 @@ public class User {
       name = "user_role",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "uuid"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  private List<RoleEntity> roles;
+  private Set<RoleEntity> roles = new HashSet<>();
 
   public void addRole(RoleEntity role) {
-    if (CollectionUtils.isEmpty(roles)) {
-      roles = new ArrayList<>();
-    }
     roles.add(role);
   }
 
