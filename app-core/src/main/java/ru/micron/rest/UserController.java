@@ -2,9 +2,7 @@ package ru.micron.rest;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.micron.dto.BasicResponse;
-import ru.micron.dto.RegisterUserDto;
-import ru.micron.mapper.UserMapper;
-import ru.micron.persistence.model.User;
+import ru.micron.dto.UserDto;
 import ru.micron.service.UserService;
 
 @Validated
@@ -25,22 +21,20 @@ import ru.micron.service.UserService;
 public class UserController {
 
   private final UserService userService;
-  private final UserMapper userMapper;
 
   @PostMapping("/register")
-  public BasicResponse<Void> registerUser(@RequestBody RegisterUserDto user) {
+  public BasicResponse<Void> registerUser(@RequestBody UserDto user) {
     userService.register(user);
     return new BasicResponse<>();
   }
 
   @GetMapping("/{id}")
-  public RegisterUserDto getUserById(@PathVariable UUID id) {
-    User user = userService.findById(id);
-    return userMapper.toDto(user);
+  public UserDto getUserById(@PathVariable UUID id) {
+    return userService.getUserById(id);
   }
   @PatchMapping
-  public BasicResponse<Void> editUser(@RequestBody RegisterUserDto user) {
-    userService.editUserInfo(user);
+  public BasicResponse<Void> editUser(@RequestBody UserDto user) {
+    userService.editUserData(user);
     return new BasicResponse<>();
   }
 }

@@ -56,7 +56,7 @@ public class User {
 
   @CreatedDate
   @Column(name = "created")
-  private LocalDateTime created = LocalDateTime.now();
+  private LocalDateTime created;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false, columnDefinition = "ACTIVE")

@@ -17,6 +17,7 @@ public abstract class FilmMapper {
 
   public static final FilmMapper INSTANCE = Mappers.getMapper(FilmMapper.class);
 
+  @Mapping(target = "users", ignore = true)
   @Mapping(target = "ageRate", source = "dto.ageRate")
   @Mapping(target = "awards", source = "dto.awards")
   @Mapping(target = "ratings", expression = "java(toEntities(dto))")

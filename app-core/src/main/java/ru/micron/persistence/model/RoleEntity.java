@@ -1,7 +1,6 @@
 package ru.micron.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -38,11 +37,6 @@ public class RoleEntity {
   @ToString.Exclude
   @ManyToMany(mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
   private List<User> users;
-
-  public RoleEntity(String role) {
-    id = UUID.nameUUIDFromBytes(role.getBytes(StandardCharsets.UTF_8));
-    this.name = role;
-  }
 
   @Override
   public boolean equals(Object o) {
