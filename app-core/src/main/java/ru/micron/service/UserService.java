@@ -24,8 +24,13 @@ public class UserService {
         .orElseThrow(() -> new UsernameNotFoundException("No user found by username: " + username));
   }
 
+  public boolean existsByUsername(String name) {
+    return userRepository.existsUserByUsername(name);
+  }
+
   public void register(UserDto userDto) {
-    userRepository.save(userMapper.register(userDto));
+    var user = userRepository.save(userMapper.register(userDto));
+    log.info("User with username {} was registered", user.getUsername());
   }
 
   public List<User> findAll() {

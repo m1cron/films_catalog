@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -97,15 +98,12 @@ public class Film {
   @Column(name = "website")
   private String website;
 
-  @Column(name = "response")
-  private Boolean response;
-
   @ToString.Exclude
   @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
   private List<FilmRating> ratings = new ArrayList<>();
 
   @ToString.Exclude
-  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "favouriteFilms", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "favouriteFilms", cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
   private Set<User> users;
 
   public void addUserToFilm(User user) {

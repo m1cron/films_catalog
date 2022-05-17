@@ -27,9 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private final AuthEntryPointJwt unauthorizedHandler;
 
   public static final String[] AUTH_WHITELIST = {
-      "/api/v1/auth/login",
-      "/api/v1/auth/logout",
-      "/api/v1/user/register",
+      "/api/v1/auth/**",
       "/api/v1/film/*",
 
       "/swagger-ui/**",

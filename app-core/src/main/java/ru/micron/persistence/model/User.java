@@ -82,7 +82,7 @@ public class User {
   }
 
   @ToString.Exclude
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinTable(
       name = "user_favourite_film",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "uuid"),

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ApiResponseDto {
+public class FilmResponseDto {
 
   @JsonProperty("Title")
   private String title;
@@ -79,7 +79,4 @@ public class ApiResponseDto {
 
   @JsonProperty("Website")
   private String website;
-
-  @JsonProperty("Response")
-  private Boolean response;
 }

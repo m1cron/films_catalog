@@ -3,7 +3,7 @@ package ru.micron.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.micron.dto.omdb.ApiResponseDto;
+import ru.micron.dto.omdb.FilmResponseDto;
 import ru.micron.dto.omdb.ApiSearchResponse;
 import ru.micron.dto.omdb.FilmType;
 
@@ -11,7 +11,7 @@ import ru.micron.dto.omdb.FilmType;
 public interface OMDbFeignClient {
 
   @GetMapping("/")
-  ApiResponseDto receiveFilms(
+  FilmResponseDto receiveFilms(
       @RequestParam("i") String id,
       @RequestParam("type") FilmType type,
       @RequestParam("y") String year,

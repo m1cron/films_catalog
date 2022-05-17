@@ -1,6 +1,9 @@
 package ru.micron.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.micron.persistence.model.Film;
 import ru.micron.persistence.repository.FilmRepository;
@@ -20,6 +23,15 @@ public class FilmService {
 
   public List<Film> findAll() {
     return filmRepository.findAll();
+  }
+
+  public Long count() {
+    return filmRepository.count();
+  }
+
+  public Page<Film> findAllByPageableAnd(int page, int size) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+    return filmRepository.findAll(pageable);
   }
 
   public void save(Film film) {

@@ -10,4 +10,5 @@ import ru.micron.persistence.model.User;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
   Optional<User> findUserByUsername(String username);
+  boolean existsUserByUsername(String username);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.micron.dto.BasicResponse;
-import ru.micron.dto.omdb.ApiResponseDto;
+import ru.micron.dto.omdb.FilmResponseDto;
 import ru.micron.mapper.FilmMapper;
 import ru.micron.persistence.model.User;
 import ru.micron.service.FilmService;
 import ru.micron.service.UserService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Validated
 @RestController
 @RequestMapping("/api/v1/admin")
@@ -52,13 +54,13 @@ public class AdminController {
   }
 
   @PostMapping("/film")
-  public BasicResponse<Void> addFilm(@RequestBody ApiResponseDto film) {
+  public BasicResponse<Void> addFilm(@RequestBody FilmResponseDto film) {
     filmService.save(filmMapper.toEntity(film));
     return new BasicResponse<>();
   }
 
   @PutMapping("/film")
-  public BasicResponse<Void> editFilm(@RequestBody ApiResponseDto film) {
+  public BasicResponse<Void> editFilm(@RequestBody FilmResponseDto film) {
     filmService.save(filmMapper.toEntity(film));
     return new BasicResponse<>();
   }
