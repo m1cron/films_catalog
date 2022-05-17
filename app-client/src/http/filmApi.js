@@ -1,7 +1,7 @@
 import {$host} from "./index";
 
 export const getById = async (imdbId) => {
-  return await $host.get('/api/v1/film/' + imdbId).then(response => {
+  return await $host.get('/api/v1/film/?imdbId=' + imdbId).then(response => {
     return response.data
   })
 }

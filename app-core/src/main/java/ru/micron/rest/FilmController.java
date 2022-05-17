@@ -45,9 +45,9 @@ public class FilmController {
         );
   }
 
-  @GetMapping("/{id}")
-  public BasicResponse<FilmResponseDto> getFilmById(@PathVariable String id) {
-    Film film = filmService.findById(id);
+  @GetMapping("/")
+  public BasicResponse<FilmResponseDto> getFilmById(@RequestParam String imdbId) {
+    Film film = filmService.findById(imdbId);
     return new BasicResponse<FilmResponseDto>().setData(filmMapper.toDto(film));
   }
 }
