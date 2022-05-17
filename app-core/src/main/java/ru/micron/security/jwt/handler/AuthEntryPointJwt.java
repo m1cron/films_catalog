@@ -1,7 +1,8 @@
-package ru.micron.security.jwt;
+package ru.micron.security.jwt.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,15 +25,17 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
   public void commence(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException authException)
       throws IOException, ServletException {
-    log.error("Unauthorized error: {}", authException.getMessage());
+    log.warn("Unauthorized error: {}", authException.getMessage());
 
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
     Map<String, Object> body = Map.of(
+        "timestamp", OffsetDateTime.now(),
         "status", HttpServletResponse.SC_UNAUTHORIZED,
         "error", "Unauthorized",
-        "message", authException.getMessage(), "path", request.getServletPath()
+        "message", authException.getMessage(),
+        "path", request.getServletPath()
     );
 
     objectMapper.writeValue(response.getOutputStream(), body);

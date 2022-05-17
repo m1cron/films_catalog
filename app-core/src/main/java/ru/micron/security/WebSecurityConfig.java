@@ -12,7 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.micron.security.jwt.AuthEntryPointJwt;
+import ru.micron.security.jwt.handler.AccessDeniedHandler;
+import ru.micron.security.jwt.handler.AuthEntryPointJwt;
 import ru.micron.security.jwt.JwtTokenFilter;
 
 @Configuration
@@ -24,7 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private final UserDetailsService userDetailsService;
   private final JwtTokenFilter jwtTokenFilter;
   private final PasswordEncoder passwordEncoder;
-  private final AuthEntryPointJwt unauthorizedHandler;
+  private final AuthEntryPointJwt authEntryPointJwt;
+  private final AccessDeniedHandler accessDeniedHandler;
 
   public static final String[] AUTH_WHITELIST = {
       "/api/v1/auth/**",
@@ -41,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.cors()
         .and()
         .csrf().disable()
-        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+        .exceptionHandling().authenticationEntryPoint(authEntryPointJwt)
+        .accessDeniedHandler(accessDeniedHandler)
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
