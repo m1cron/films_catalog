@@ -1,35 +1,30 @@
 package ru.micron.mapper;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
-import liquibase.util.CollectionUtil;
-import org.hibernate.mapping.Collection;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.util.CollectionUtils;
-import ru.micron.persistence.model.Role;
+import ru.micron.persistence.model.RoleEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = {UUID.class, StandardCharsets.class})
 public abstract class RoleMapper {
 
   public static final RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
 
+  @Mapping(target = "id", expression = "java(UUID.nameUUIDFromBytes(name.name().getBytes(StandardCharsets.UTF_8)))")
   @Mapping(target = "name", source = "name")
-  protected abstract Role toEntity(String name);
+  @Mapping(target = "users", ignore = true)
+  protected abstract RoleEntity toEntity(RoleEntity.ERole name);
 
-  protected List<Role> toListOfEntities(List<String> roles) {
+  public List<String> toList(List<RoleEntity> roles) {
     if (CollectionUtils.isEmpty(roles)) {
       return Collections.emptyList();
     }
-    return roles.stream().map(o -> new Role().setName(o)).collect(Collectors.toList());
-  }
-
-  protected List<String> mapToListOfDto(List<Role> roles) {
-    if (CollectionUtils.isEmpty(roles)) {
-      return Collections.emptyList();
-    }
-    return roles.stream().map(Role::getName).collect(Collectors.toList());
+    return roles.stream().map(o -> o.getName().name()).collect(Collectors.toList());
   }
 }

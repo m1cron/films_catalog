@@ -1,19 +1,14 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.12'
+    id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
 ext {
     lombok                  = '1.18.22'
-    validationApi           = '2.0.1.Final'
-    swagger2                = '2.9.2'
-    swaggerAnnotations      = '2.1.1'
-    javaxServlet            = '4.0.1'
+    openApi                 = '1.6.8'
     jjwt                    = '0.9.1'
     mapstruct               = '1.4.2.Final'
-    hvalidator              = '6.0.2.Final'
-    h2                      = '1.4.200'
 }
 
 group = 'ru.micron'
@@ -21,27 +16,32 @@ version = '1.0'
 targetCompatibility = sourceCompatibility = '11'
 defaultTasks 'clean', 'build'
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
     mavenLocal()
 }
 
 dependencies {
-    // Spring
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$lombok"
+    annotationProcessor "org.projectlombok:lombok:$lombok"
+
+    // Spring & Spring Cloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // Swagger
-    implementation "io.springfox:springfox-swagger2:$swagger2"
-    implementation "io.springfox:springfox-swagger-ui:$swagger2"
-    implementation "io.swagger.core.v3:swagger-annotations:$swaggerAnnotations"
-
-    // Validation
-    implementation "org.hibernate.validator:hibernate-validator:$hvalidator"
-    implementation "org.hibernate.validator:hibernate-validator-annotation-processor:$hvalidator"
-    implementation "javax.validation:validation-api:$validationApi"
+    implementation "org.springdoc:springdoc-openapi-ui:$openApi"
 
     // Database
     implementation 'org.postgresql:postgresql'
@@ -54,13 +54,15 @@ dependencies {
     implementation "org.mapstruct:mapstruct:$mapstruct"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct"
 
-    // Lombok
-    compileOnly "org.projectlombok:lombok:$lombok"
-    annotationProcessor "org.projectlombok:lombok:$lombok"
-
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "com.h2database:h2:$h2"
+    testImplementation "com.h2database:h2"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2021.0.1'
+    }
 }
 
 test {

@@ -1,33 +1,41 @@
 databaseChangeLog:
   - changeSet:
-      id: 20210317-01
+      id: 20220513-01
       author: m1cron4900@gmail.com
       changes:
         - sqlFile:
             encoding: utf8
-            path: 20210317-01-init_main_tables.sql
+            path: 20220513-01-init_main_tables.sql
             relativeToChangelogFile: true
   - changeSet:
-      id: 20210317-02
+      id: 20220513-02
       author: m1cron4900@gmail.com
       changes:
         - sqlFile:
             encoding: utf8
-            path: 20210317-03-init_favorite_tables.sql
+            path: 20220513-02-init_role_tables.sql
             relativeToChangelogFile: true
   - changeSet:
-      id: 20210317-03
+      id: 20220513-03
       author: m1cron4900@gmail.com
       changes:
         - sqlFile:
             encoding: utf8
-            path: 20210317-02-init_roles_tables.sql
+            path: 20220513-03-film_receive.sql
             relativeToChangelogFile: true
   - changeSet:
-      id: 20210317-04
+      id: 20220513-04
       author: m1cron4900@gmail.com
-      changes:
-        - sqlFile:
-            encoding: utf8
-            path: 20210317-04-filling_tables.sql
-            relativeToChangelogFile: true
+      loadData:
+        columns:
+          - column:
+              header: imdb_id
+              name: imdb_id
+              type: STRING
+        encoding: utf8
+        tableName: film_receive
+        primaryKey: pk_imdb_id
+        file: 20220513-04-movie_warmup.csv
+        separator: ','
+        quotchar: ''''
+        relativeToChangelogFile: true

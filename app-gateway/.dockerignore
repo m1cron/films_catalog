@@ -1,0 +1,12 @@
+**/.idea
+.git
+.gitignore
+**/screens/
+*.md
+LICENSE
+.gradle/
+gradle/
+**/gradlew*
+**/logs/
+build/
+**/node_modules

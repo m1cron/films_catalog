@@ -1,5 +1,5 @@
 # Build
-FROM gradle:7.1.1-jdk11 AS build
+FROM gradle:7.4-jdk11 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle clean bootJar --no-daemon
@@ -8,5 +8,5 @@ RUN gradle clean bootJar --no-daemon
 FROM openjdk:11
 EXPOSE 8080
 RUN mkdir /app
-COPY --from=build /home/gradle/src/service/build/libs/*.jar /app/application.jar
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/application.jar
 ENTRYPOINT ["java", "-jar", "/app/application.jar"]

@@ -1,9 +1,6 @@
 version: "3.9"
 
 services:
-  libs:
-    build: ./app-libs
-
   database:
     image: postgres
     hostname: database
@@ -23,7 +20,15 @@ services:
 
   gateway:
     build: ./app-gateway
+    hostname: gateway
     links:
       - core
     ports:
       - "8080:8080"
+
+  front:
+    build: ./app-client
+    links:
+      - gateway
+    ports:
+      - "80:80"

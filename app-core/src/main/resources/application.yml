@@ -11,6 +11,7 @@ spring:
   main:
     banner-mode: off
     allow-bean-definition-overriding: true
+    allow-circular-references: true
   mandatory-file-encoding: UTF-8
   datasource:
     url: jdbc:postgresql://${postgres.host}/${postgres.dbname}?currentSchema=${postgres.schema}
@@ -37,6 +38,8 @@ spring:
   liquibase:
     enabled: true
     change-log: 'classpath:liquibase/changelog-master.yml'
+  jackson:
+    default-property-inclusion: non_null
 
 server:
   port: 8081
@@ -51,5 +54,14 @@ management:
 
 jwt:
   header: Authorization
-  secret: film
-  expiration: 604800
+  secret: ZmlsbQ==
+  expirationMills: 900000 # 15 min
+
+feign:
+  OMDbApi:
+    apiKey: "a51f3624"
+    url: "http://omdbapi.com"
+
+logging:
+  level:
+    ru.micron: debug

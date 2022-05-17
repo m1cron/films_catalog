@@ -1,28 +1,30 @@
 package ru.micron.rest;
 
-import io.swagger.annotations.ApiOperation;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.micron.dto.AuthRequestDto;
-import ru.micron.persistence.model.User;
-import ru.micron.security.jwt.JwtTokenProvider;
+import ru.micron.dto.BasicResponse;
+import ru.micron.dto.JwtResponse;
+import ru.micron.dto.UserDto;
+import ru.micron.security.UserDetails;
+import ru.micron.security.jwt.JwtUtils;
 import ru.micron.service.UserService;
 
+@Slf4j
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Validated
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -30,34 +32,56 @@ import ru.micron.service.UserService;
 public class AuthController {
 
   private final AuthenticationManager authenticationManager;
-  private final JwtTokenProvider jwtTokenProvider;
+  private final JwtUtils jwtUtils;
   private final UserService userService;
 
-  @ApiOperation("Authenticate user")
   @PostMapping("/login")
-  public ResponseEntity<?> authenticate(@RequestBody AuthRequestDto requestDTO) {
-    try {
-      String username = requestDTO.getUsername();
-      authenticationManager.authenticate(
-          new UsernamePasswordAuthenticationToken(username, requestDTO.getPassword()));
-      User user = userService.findByUsername(username);
-      if (user == null) {
-        throw new UsernameNotFoundException("User with username: " + username + " not found");
-      }
-      String token = jwtTokenProvider.createToken(username, user.getRoles());
-      Map<Object, Object> response = new HashMap<>();
-      response.put("username", username);
-      response.put("token", token);
-      return ResponseEntity.ok(response);
-    } catch (AuthenticationException e) {
-      throw new BadCredentialsException("Invalid username or password");
-    }
+  public BasicResponse<JwtResponse> login(@RequestBody UserDto loginRequest) {
+    return new BasicResponse<JwtResponse>()
+        .setData(authenticate(loginRequest));
   }
 
-  @ApiOperation("Logout user")
-  @PostMapping("/logout")
-  public void logout(HttpServletRequest request, HttpServletResponse response) {
-    SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-    securityContextLogoutHandler.logout(request, response, null);
+  @PostMapping("/register")
+  public BasicResponse<JwtResponse> registerUser(@RequestBody UserDto registerRequest) {
+    if (userService.existsByUsername(registerRequest.getUsername())) {
+      throw new AuthenticationServiceException(
+          "User with username '" + registerRequest.getUsername() + "' already exists");
+    }
+
+    userService.register(registerRequest);
+
+    log.info("Token was created for user with name {}", registerRequest.getUsername());
+    return new BasicResponse<JwtResponse>()
+        .setData(authenticate(registerRequest));
+  }
+
+  @PostMapping("/check")
+  public BasicResponse<Void> checkIsRegistered(@RequestBody UserDto check) {
+    return new BasicResponse<Void>()
+        .setSuccess(userService.existsByUsername(check.getUsername()));
+  }
+
+  private JwtResponse authenticate(UserDto user) {
+    Authentication authentication = authenticationManager
+        .authenticate(
+            new UsernamePasswordAuthenticationToken(
+                user.getUsername(),
+                user.getPassword())
+        );
+
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = jwtUtils.generateJwtToken(authentication);
+
+    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    List<String> roles = userDetails.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.toList());
+
+    log.info("Token was created for user with name {}", user.getUsername());
+    return new JwtResponse()
+        .setUuid(userDetails.getUuid())
+        .setToken(jwt)
+        .setUsername(userDetails.getUsername())
+        .setRoles(roles);
   }
 }
