@@ -1,9 +1,9 @@
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.micron.Application;
+import ru.micron.GatewayApplication;
 
-@SpringBootTest(classes = Application.class)
-class ApplicationTest {
+@SpringBootTest(classes = GatewayApplication.class)
+class GatewayApplicationTest {
 
   @Test
   public void contextLoads() {

@@ -1,4 +1,4 @@
-package ru.micron.configs;
+package ru.micron.config;
 
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +33,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @RequiredArgsConstructor
 public class GatewaySwaggerConfig implements SwaggerResourcesProvider {
 
-  private static final String API_DOCS_V2 = "/v2/api-docs";
+  private static final String API_DOCS_V2 = "/v3/api-docs";
 
   private final RouteLocator routeLocator;
 
@@ -43,16 +42,13 @@ public class GatewaySwaggerConfig implements SwaggerResourcesProvider {
 
   @Override
   public List<SwaggerResource> get() {
-    List<SwaggerResource> resources = new ArrayList<>();
-    resources.add(swaggerResource(new Route(appName, EMPTY, EMPTY, EMPTY, false, null)));
-    resources.addAll(routeLocator.getRoutes().stream()
+    return routeLocator.getRoutes()
+        .stream()
         .map(this::swaggerResource)
-        .collect(Collectors.toList()));
-    return resources;
+        .collect(Collectors.toList());
   }
 
   @Bean
-  @ConditionalOnMissingBean(Docket.class)
   public Docket swagger() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
@@ -68,7 +64,7 @@ public class GatewaySwaggerConfig implements SwaggerResourcesProvider {
     var swaggerResource = new SwaggerResource();
     swaggerResource.setName(route.getId());
     swaggerResource.setLocation(route.getPrefix().concat(API_DOCS_V2));
-    swaggerResource.setSwaggerVersion("2.0");
+    swaggerResource.setSwaggerVersion("3.0");
     return swaggerResource;
   }
 
