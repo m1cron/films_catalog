@@ -23,5 +23,5 @@ Containerization with Docker and Docker Compose
 Gradle
 ```
 
-![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/1.png)
-![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/2.png)
+![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/00.png)
+![Image alt](https://github.com/m1cron/films_catalog/raw/master/screens/01.png)
